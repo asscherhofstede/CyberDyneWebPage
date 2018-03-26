@@ -109,6 +109,7 @@
     <Content Include="Pages\Homepage.cshtml" />
     <Content Include="Pages\LogInPage.cshtml" />
     <Content Include="Pages\TermsAndCondition.cshtml" />
+    <Content Include="Pages\CreatAccount.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
