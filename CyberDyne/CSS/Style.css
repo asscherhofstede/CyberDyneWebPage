@@ -118,6 +118,7 @@
     grid-area: tutorial;
     padding: 10px;
     justify-self: center;
+<<<<<<< HEAD
 }
 
 input[type=text], input[type=password] {
@@ -201,4 +202,6 @@ span.psw {
     text-align: center;
     padding: 18px;
     font-size: 30px
+=======
+>>>>>>> 1b5f6b38be73ae0273ed9569347690a8adf2d103
 }
