@@ -117,10 +117,17 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Pages\Homepage.cshtml" />
+<<<<<<< HEAD
     <Content Include="Pages\Log In.cshtml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+=======
+    <Content Include="Pages\LogInPage.cshtml" />
+    <Content Include="Pages\TermsAndCondition.cshtml" />
+    <Content Include="Pages\CreatAccount.cshtml" />
+    <None Include="packages.config" />
+>>>>>>> main
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
