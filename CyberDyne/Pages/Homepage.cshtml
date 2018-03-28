@@ -1,4 +1,89 @@
-﻿<!DOCTYPE html>
+﻿@using WebMatrix.Data;
+@{
+    //Kijken op welke knop je hebt gedukt bij de startpagina
+    bool child = Convert.ToBoolean(Session["child"]);
+    bool teen = Convert.ToBoolean(Session["teen"]);
+    bool adult = Convert.ToBoolean(Session["adult"]);
+
+
+    //variabelen
+    int RobotIDTop;
+    int RobotIDSecond;
+    int RobotIDBottom;
+
+    var nameTop = "";
+    var nameSecond = "";
+    var nameBottom = "";
+
+    var descriptionTop = "";
+    var descriptionSecond = "";
+    var descriptionBottom = "";
+
+    var linkTop = "";
+    var linkSecond = "";
+    var linkBottom = "";
+
+    var tutorialTop = "";
+    var tutorialSecond = "";
+    var tutorialBottom = "";
+
+    var informationTop = "";
+    var informationSecond = "";
+    var informationBottom = "";
+
+
+    //open de database en alle commands voor de data
+    var db = Database.Open("Robot");
+    var idCommandTop = "SELECT TOP 1 RobotID FROM Robot ORDER BY RobotID DESC";
+    var idCommandSecond = "SELECT TOP 1 RobotID FROM (SELECT TOP 2 RobotID FROM Robot ORDER BY RobotID DESC) AS A ORDER BY RobotID";
+    var idCommandBottom = "SELECT TOP 1 RobotID FROM (SELECT TOP 3 RobotID FROM Robot ORDER BY RobotID DESC) AS A ORDER BY RobotID";
+    RobotIDTop = db.QueryValue(idCommandTop);
+    RobotIDSecond = db.QueryValue(idCommandSecond);
+    RobotIDBottom = db.QueryValue(idCommandBottom);
+
+
+    //Hier komen die pagina if'jes
+    if (1 == 2/*Klik je op de pagina button 2 ofzo*/)
+    {
+        RobotIDTop -= 3;
+        RobotIDSecond -= 3;
+        RobotIDBottom -= 3;
+    }
+
+
+
+    //Alle command voor de variabelen
+    var nameCommand = "SELECT Name FROM Robot WHERE RobotID = @0";
+    var descriptionCommand = "SELECT Description FROM Robot WHERE RobotID = @0";
+    var linkCommand = "SELECT Link FROM Robot WHERE RobotID = @0";
+    var tutorialCommand = "SELECT Tutorial FROM Robot WHERE RobotID = @0";
+    var infoCommand = "SELECT Information FROM Robot WHERE RobotID = @0";
+
+
+    //Geef elke variabele de data uit de database waar de id klopt
+    nameTop = db.QueryValue(nameCommand, RobotIDTop);
+    nameSecond = db.QueryValue(nameCommand, RobotIDSecond);
+    nameBottom = db.QueryValue(nameCommand, RobotIDBottom);
+
+    descriptionTop = db.QueryValue(descriptionCommand, RobotIDTop);
+    descriptionSecond = db.QueryValue(descriptionCommand, RobotIDSecond);
+    descriptionBottom = db.QueryValue(descriptionCommand, RobotIDBottom);
+
+    linkTop = db.QueryValue(linkCommand, RobotIDTop);
+    linkSecond = db.QueryValue(linkCommand, RobotIDSecond);
+    linkBottom = db.QueryValue(linkCommand, RobotIDBottom);
+
+    tutorialTop = db.QueryValue(tutorialCommand, RobotIDTop);
+    tutorialSecond = db.QueryValue(tutorialCommand, RobotIDSecond);
+    tutorialBottom = db.QueryValue(tutorialCommand, RobotIDBottom);
+
+    informationTop = db.QueryValue(infoCommand, RobotIDTop);
+    informationSecond = db.QueryValue(infoCommand, RobotIDSecond);
+    informationBottom = db.QueryValue(infoCommand, RobotIDBottom);
+
+
+}
+<!DOCTYPE html>
 <html>
 <head>
     <title>CyberDyne</title>
@@ -10,89 +95,61 @@
         <!--Hier komt de header.-->
     </div>
 
-
     <div class="container-banner">
         <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
     </div>
 
     <div class="robot-grid">
         <div class="image">
-            <img class="image" src="http://via.placeholder.com/500x350?text=image">
+            <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
         </div>
         <div class="text">
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor.
-                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
-                Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-                Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-            </p>
+            <p>@descriptionTop</p>
         </div>
         <div class="store">
-            <a href="#">Store</a>
+            <a href="@linkTop">Store</a>
         </div>
         <div class="info">
-            <a href="#">Info</a>
+            <a href="@informationTop">Info</a>
         </div>
         <div class="tutorial">
-            <a href="#">Tutorial</a>
+            <a href="@tutorialTop">Tutorial</a>
         </div>
     </div>
 
     <div class="robot-grid-inverse">
         <div class="image">
-            <img class="image" src="http://via.placeholder.com/500x350?text=image">
+            <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
         </div>
         <div class="text">
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor.
-                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
-                Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-                Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-            </p>
+            <p>@descriptionSecond</p>
         </div>
         <div class="store">
-            <a href="#">Store</a>
+            <a href="@linkSecond">Store</a>
         </div>
         <div class="info">
-            <a href="#">Info</a>
+            <a href="@informationSecond">Info</a>
         </div>
         <div class="tutorial">
-            <a href="#">Tutorial</a>
+            <a href="@tutorialSecond">Tutorial</a>
         </div>
     </div>
 
     <div class="robot-grid">
         <div class="image">
-            <img class="image" src="http://via.placeholder.com/500x350?text=image">
+            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
         </div>
         <div class="text">
-            <p>
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                Aenean commodo ligula eget dolor.
-                Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus.
-                Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.
-                Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
-            </p>
+            <p>@descriptionBottom</p>
         </div>
         <div class="store">
-            <a href="#">Store</a>
+            <a href="@linkBottom">Store</a>
         </div>
         <div class="info">
-            <a href="#">Info</a>
+            <a href="@informationBottom">Info</a>
         </div>
         <div class="tutorial">
-            <a href="#">Tutorial</a>
+            <a href="@tutorialBottom">Tutorial</a>
         </div>
     </div>
 

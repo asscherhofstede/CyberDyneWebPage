@@ -1,0 +1,110 @@
+﻿@using System.IO;
+@{
+    int id = 0;
+    var fileName = "";
+    var fileMime = "";
+    var name = "";
+    var description = "";
+    var link = "";
+    var tutorial = "";
+    var fullInfo = "";
+
+    //Als je op submit knop drukt
+    if (IsPost)
+    {
+        //Save the information in database
+        var db = Database.Open("Robot");
+        name = Request.Form["name"];
+        description = Request.Form["description"];
+        link = Request.Form["link"];
+        tutorial = Request.Form["tutorial"];
+        fullInfo = Request.Form["fullInfo"];
+
+        var insertCommand = "INSERT INTO Robot (Name, Description, Link, Tutorial, Information) VALUES (@0, @1, @2, @3, @4)";
+        db.Execute(insertCommand, name, description, link, tutorial, fullInfo);
+
+        //hier het opvragen voor de RobotID voor het linken met de foto.
+        var getRobotID = "SELECT RobotID FROM Robot WHERE Name = @0 AND Description = @1";
+        var RobotID = db.QueryValue(getRobotID, name, description);
+
+        //Voor de foto
+        var uploadedFile = Request.Files[0];
+        fileName = Path.GetFileName(uploadedFile.FileName);
+        if (fileName != String.Empty)
+        {
+            fileMime = uploadedFile.ContentType;
+            var fileStream = uploadedFile.InputStream;
+            var fileLength = uploadedFile.ContentLength;
+
+            byte[] fileContent = new byte[fileLength];
+            fileStream.Read(fileContent, 0, fileLength);
+            var sql = "INSERT INTO Photos (ImageName, ImageContent, MimeType, RobotID) VALUES (@0,@1,@2,@3)";
+            db.Execute(sql, fileName, fileContent, fileMime, RobotID);
+            id = (int)db.GetLastInsertId();
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FileUpload Example</title>
+</head>
+<body>
+    <h1>FileUpload Example</h1>
+
+    <form class="offset-5" method="post" enctype="multipart/form-data">
+        @FileUpload.GetHtml(
+                    initialNumberOfFiles: 1,
+                    allowMoreFilesToBeAdded: false,
+                    includeFormTag: false,
+                    uploadText: "Upload")
+        <div class="form-group">
+            <p class="pl-2 pt-2">Naam</p>
+            <input type="text" name="name" class="form-control col-5" placeholder="Naam" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <p class="pl-2">Beschrijving</p>
+            <input type="text" name="description" class="form-control col-5" placeholder="Beschrijving" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <p class="pl-2">Link</p>
+            <input type="text" name="link" class="form-control col-5" placeholder="Link" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <p class="pl-2">Tutorial</p>
+            <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <p class="pl-2">Volledig Informatie</p>
+            <input type="text" name="fullInfo" class="form-control col-5" placeholder="Volledige beschrijving" />
+        </div>
+        <hr />
+        <button class="btn offset-1" type="submit" value="Upload">Add robot</button>
+    </form>
+
+    @if (IsPost && fileName != String.Empty)
+    {
+        <span>File uploaded!</span><br />
+        if (fileMime.StartsWith("image"))
+        {
+            <img src="Download.cshtml?Id=@id" alt="" />
+        }
+        else
+        {
+            <a href="Download.cshtml?Id=@id">Click Here</a>
+        }
+    }
+</body>
+</html>

@@ -1,0 +1,31 @@
+﻿@{
+    var db = Database.Open("Robot");
+
+    int RobotID = 0;
+    if (Request["RobotID"].IsInt())
+    {
+        RobotID = Request["RobotID"].AsInt();
+        var imageCommand = "SELECT * FROM Photos WHERE RobotID = @0";
+        var image = db.QuerySingle(imageCommand, RobotID);
+
+        if (image != null)
+        {
+            if (image.MimeType.StartsWith("image/"))
+            {
+                Response.AddHeader("content-disposition", "inline; filename=" + image.ImageName);
+            }
+
+            Response.ContentType = image.MimeType;
+            Response.BinaryWrite((byte[])image.ImageContent); 
+        }
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

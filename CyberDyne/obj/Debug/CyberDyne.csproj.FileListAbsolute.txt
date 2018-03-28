@@ -146,3 +146,6 @@ C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberd
 C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\obj\Debug\CyberDyne.csproj.CopyComplete
 C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\obj\Debug\CyberDyne.dll
 C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\obj\Debug\CyberDyne.pdb
+C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\bin\Microsoft.Web.Helpers.dll
+C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\bin\WebMatrix.WebData.dll
+C:\Users\Kevin\Desktop\School\Periode 3\[Project] Webapplicatie\[Project] Cyberdyne\CyberDyne\bin\WebMatrix.WebData.xml
