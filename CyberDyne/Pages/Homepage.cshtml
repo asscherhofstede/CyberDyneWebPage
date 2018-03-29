@@ -88,12 +88,10 @@
 <head>
     <title>CyberDyne</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/CSS/Style.css" rel="stylesheet" />v
+    <link href="~/CSS/Kevin.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="header sticky-top">
-        <!--Hier komt de header.-->
-    </div>
+    @RenderPage("~/Shared/_Header.cshtml")
 
     <div class="container-banner">
         <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
@@ -101,7 +99,7 @@
 
     <div class="robot-grid">
         <div class="image">
-            <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
         </div>
         <div class="text">
             <p>@descriptionTop</p>
@@ -119,7 +117,7 @@
 
     <div class="robot-grid-inverse">
         <div class="image">
-            <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
         </div>
         <div class="text">
             <p>@descriptionSecond</p>
@@ -156,8 +154,6 @@
 
 
 
-    <div class="footer">
-        <!--Hier komt de footer-->
-    </div>
+@RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>
