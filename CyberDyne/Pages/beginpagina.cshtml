@@ -7,9 +7,7 @@
     <link href="~/CSS/David.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="header sticky-top">
-        <!--Hier komt de header.-->
-    </div>
+    @RenderPage("~/Shared/_Header.cshtml")
 
     <div class="container-banner">
         <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner" width="1920">
@@ -19,25 +17,27 @@
         <p>
             <div style="text-align:center">
 
-                <a href="#">
+                <a href="Homepage.cshtml?view=child">
                     <div class="leeftijdsbutton">
                         3 t/m 6
                     </div>
                 </a>
-                <a href="#">
+                <a href="Homepage.cshtml?view=teen">
                     <div class="leeftijdsbutton">
                         6 t/m 12
                     </div>
                 </a>
-                <a href="#">
+                <a href="Homepage.cshtml?view=adult">
                     <div class="leeftijdsbutton">
                         12 en ouder
                     </div>
                 </a>
 
 
-            </div></p>
-</div>
-    
+            </div>
+        </p>
+    </div>
+
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>

@@ -1,11 +1,33 @@
 ﻿@using WebMatrix.Data;
 @{
-    //Kijken op welke knop je hebt gedukt bij de startpagina
+    #region SessionControl
+    //Hier kijk je wat de vorige pagina heeft meegegeven in de URL
+    string check = Request.QueryString["view"];
+    if (check == "child")
+    {
+        Session["child"] = true;
+    }
+    else if (check == "teen")
+    {
+        Session["teen"] = true;
+    }
+    else if (check == "adult")
+    {
+        Session["adult"] = true;
+    }
+    else
+    {
+        Response.Redirect("~/Pages/beginpagina.cshtml");
+    }
+
+    //Hier geef je de variabele de waarde van de session (true/false)
     bool child = Convert.ToBoolean(Session["child"]);
     bool teen = Convert.ToBoolean(Session["teen"]);
     bool adult = Convert.ToBoolean(Session["adult"]);
+    bool admin = Convert.ToBoolean(Session["admin"]);
+    #endregion
 
-
+    #region Variabelen
     //variabelen
     int RobotIDTop;
     int RobotIDSecond;
@@ -31,7 +53,9 @@
     var informationSecond = "";
     var informationBottom = "";
 
+    #endregion
 
+    #region Database openen en queries opstellen
     //open de database en alle commands voor de data
     var db = Database.Open("Robot");
     var idCommandTop = "SELECT TOP 1 RobotID FROM Robot ORDER BY RobotID DESC";
@@ -41,7 +65,9 @@
     RobotIDSecond = db.QueryValue(idCommandSecond);
     RobotIDBottom = db.QueryValue(idCommandBottom);
 
+    #endregion
 
+    #region Pagina-indeling
     //Hier komen die pagina if'jes
     if (1 == 2/*Klik je op de pagina button 2 ofzo*/)
     {
@@ -50,8 +76,9 @@
         RobotIDBottom -= 3;
     }
 
+    #endregion
 
-
+    #region Queries voor de variabelen
     //Alle command voor de variabelen
     var nameCommand = "SELECT Name FROM Robot WHERE RobotID = @0";
     var descriptionCommand = "SELECT Description FROM Robot WHERE RobotID = @0";
@@ -59,7 +86,9 @@
     var tutorialCommand = "SELECT Tutorial FROM Robot WHERE RobotID = @0";
     var infoCommand = "SELECT Information FROM Robot WHERE RobotID = @0";
 
+    #endregion
 
+    #region Assignen van de variabelen
     //Geef elke variabele de data uit de database waar de id klopt
     nameTop = db.QueryValue(nameCommand, RobotIDTop);
     nameSecond = db.QueryValue(nameCommand, RobotIDSecond);
@@ -80,7 +109,7 @@
     informationTop = db.QueryValue(infoCommand, RobotIDTop);
     informationSecond = db.QueryValue(infoCommand, RobotIDSecond);
     informationBottom = db.QueryValue(infoCommand, RobotIDBottom);
-
+    #endregion
 
 }
 <!DOCTYPE html>
@@ -93,63 +122,76 @@
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
-    <div class="container-banner">
-        <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
-    </div>
+    @if (child)
+    {
+        Response.Write("Fuck Off!");
+    }
+    
+    @if (teen)
+    {
+        Response.Write("Fuck Off!");
+    }
 
-    <div class="robot-grid">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+    @if (adult || admin)
+    {
+        <div class="container-banner">
+            <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
         </div>
-        <div class="text">
-            <p>@descriptionTop</p>
-        </div>
-        <div class="store">
-            <a href="@linkTop">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationTop">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialTop">Tutorial</a>
-        </div>
-    </div>
 
-    <div class="robot-grid-inverse">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+        <div class="robot-grid">
+            <div class="image">
+                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p>@descriptionTop</p>
+            </div>
+            <div class="store">
+                <a href="@linkTop">Store</a>
+            </div>
+            <div class="info">
+                <a href="@informationTop">Info</a>
+            </div>
+            <div class="tutorial">
+                <a href="@tutorialTop">Tutorial</a>
+            </div>
         </div>
-        <div class="text">
-            <p>@descriptionSecond</p>
-        </div>
-        <div class="store">
-            <a href="@linkSecond">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationSecond">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialSecond">Tutorial</a>
-        </div>
-    </div>
 
-    <div class="robot-grid">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+        <div class="robot-grid-inverse">
+            <div class="image">
+                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p>@descriptionSecond</p>
+            </div>
+            <div class="store">
+                <a href="@linkSecond">Store</a>
+            </div>
+            <div class="info">
+                <a href="@informationSecond">Info</a>
+            </div>
+            <div class="tutorial">
+                <a href="@tutorialSecond">Tutorial</a>
+            </div>
         </div>
-        <div class="text">
-            <p>@descriptionBottom</p>
+
+        <div class="robot-grid">
+            <div class="image">
+                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p>@descriptionBottom</p>
+            </div>
+            <div class="store">
+                <a href="@linkBottom">Store</a>
+            </div>
+            <div class="info">
+                <a href="@informationBottom">Info</a>
+            </div>
+            <div class="tutorial">
+                <a href="@tutorialBottom">Tutorial</a>
+            </div>
         </div>
-        <div class="store">
-            <a href="@linkBottom">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationBottom">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialBottom">Tutorial</a>
-        </div>
-    </div>
+    }
 
 
 

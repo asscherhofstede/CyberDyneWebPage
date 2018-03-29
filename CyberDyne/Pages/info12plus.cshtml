@@ -7,9 +7,7 @@
     <link href="~/CSS/David.css" rel="stylesheet" />
 </head>
 <body link="red">
-    <div class="header sticky-top">
-        <!--Hier komt de header.-->
-    </div>
+    @RenderPage("~/Shared/_Header.cshtml")
 
     <div class="container-banner">
         <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner" width="1920">
@@ -37,7 +35,7 @@
         </div>
 
     </div>
-    <div class="rechter" style="border:5px solid black; border-radius:5px;" >
+    <div class="rechter" style="border:5px solid black; border-radius:5px;">
         <ul style="font-size:120%">
             <li>Hier komt een feitje te staan over de robot</li>
             <li>Hier komt een feitje te staan over de robot</li>
@@ -51,6 +49,6 @@
         </ul>
     </div>
 
-
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>

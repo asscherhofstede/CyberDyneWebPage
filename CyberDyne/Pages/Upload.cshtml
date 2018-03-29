@@ -1,5 +1,7 @@
 ﻿@using System.IO;
 @{
+    bool admin = Convert.ToBoolean(Session["admin"]);
+
     int id = 0;
     var fileName = "";
     var fileMime = "";
@@ -50,61 +52,75 @@
     <title>FileUpload Example</title>
 </head>
 <body>
-    <h1>FileUpload Example</h1>
+    @RenderPage("~/Shared/_Header.cshtml")
 
-    <form class="offset-5" method="post" enctype="multipart/form-data">
-        @FileUpload.GetHtml(
-                    initialNumberOfFiles: 1,
-                    allowMoreFilesToBeAdded: false,
-                    includeFormTag: false,
-                    uploadText: "Upload")
-        <div class="form-group">
-            <p class="pl-2 pt-2">Naam</p>
-            <input type="text" name="name" class="form-control col-5" placeholder="Naam" />
-        </div>
-
-        <br />
-
-        <div class="form-group">
-            <p class="pl-2">Beschrijving</p>
-            <input type="text" name="description" class="form-control col-5" placeholder="Beschrijving" />
-        </div>
-
-        <br />
-
-        <div class="form-group">
-            <p class="pl-2">Link</p>
-            <input type="text" name="link" class="form-control col-5" placeholder="Link" />
-        </div>
-
-        <br />
-
-        <div class="form-group">
-            <p class="pl-2">Tutorial</p>
-            <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
-        </div>
-
-        <br />
-
-        <div class="form-group">
-            <p class="pl-2">Volledig Informatie</p>
-            <input type="text" name="fullInfo" class="form-control col-5" placeholder="Volledige beschrijving" />
-        </div>
-        <hr />
-        <button class="btn offset-1" type="submit" value="Upload">Add robot</button>
-    </form>
-
-    @if (IsPost && fileName != String.Empty)
+    @if (admin)
     {
-        <span>File uploaded!</span><br />
-        if (fileMime.StartsWith("image"))
+        <h1>FileUpload Example</h1>
+
+        <form class="offset-5" method="post" enctype="multipart/form-data">
+            @FileUpload.GetHtml(
+                initialNumberOfFiles: 1,
+                allowMoreFilesToBeAdded: false,
+                includeFormTag: false,
+                uploadText: "Upload")
+            <div class="form-group">
+                <p class="pl-2 pt-2">Naam</p>
+                <input type="text" name="name" class="form-control col-5" placeholder="Naam" />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <p class="pl-2">Beschrijving</p>
+                <input type="text" name="description" class="form-control col-5" placeholder="Beschrijving" />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <p class="pl-2">Link</p>
+                <input type="text" name="link" class="form-control col-5" placeholder="Link" />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <p class="pl-2">Tutorial</p>
+                <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
+            </div>
+
+            <br />
+
+            <div class="form-group">
+                <p class="pl-2">Volledig Informatie</p>
+                <input type="text" name="fullInfo" class="form-control col-5" placeholder="Volledige beschrijving" />
+            </div>
+            <hr />
+            <button class="btn offset-1" type="submit" value="Upload">Add robot</button>
+        </form>
+
+        if(IsPost && fileName != String.Empty)
         {
-            <img src="Download.cshtml?Id=@id" alt="" />
-        }
-        else
-        {
-            <a href="Download.cshtml?Id=@id">Click Here</a>
+            <span>File uploaded!</span><br />
+            if (fileMime.StartsWith("image"))
+            {
+                <img src="Download.cshtml?Id=@id" alt="" />
+            }
+            else
+            {
+                <a href="Download.cshtml?Id=@id">Click Here</a>
+            }
         }
     }
+    else
+    {
+        Response.Redirect("~/Pages/Homepage.cshtml");
+        //Moet even een popup komen dat je wordt redirect naar de homepagina ofzo
+    }
+
+
+
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>
