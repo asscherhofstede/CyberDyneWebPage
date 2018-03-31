@@ -167,3 +167,9 @@ span.psw {
     margin: auto;
     margin-top: 50px;
 }
+
+.page-navigation {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
