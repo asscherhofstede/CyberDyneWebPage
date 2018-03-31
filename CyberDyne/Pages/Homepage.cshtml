@@ -83,13 +83,13 @@
     var records = db.Query(recordCommand);
     var numberOfPages = records.Count() / 3;
 
-    //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is(Never trust the user). 
+    //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!). 
     //Dan loop ik door de records in de database en geef ik per pagina aan wat het ID van de robot moet zijn.
     if (Request["page"].IsInt())
     {
         page = Request["page"].AsInt();
 
-        if (page > 1)
+        if (page > 1 && numberOfPages >= page)
         {
             int pageNumber = 1;
 
@@ -100,6 +100,10 @@
                 RobotIDBottom = db.QueryValue(idCommand, pageNumber + 2);
                 pageNumber += 3;
             }
+        }
+        else
+        {
+            Response.Write("Pagina bestaat niet!!");
         }
     }
     #endregion
@@ -169,7 +173,7 @@
                 <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
             </div>
             <div class="text">
-                <p>@descriptionTop</p>
+                <p style="padding-left:50px;">@descriptionTop</p>
             </div>
             <div class="store">
                 <a href="@linkTop">Store</a>
@@ -187,7 +191,7 @@
                 <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
             </div>
             <div class="text">
-                <p>@descriptionSecond</p>
+                <p style="padding-left:50px;">@descriptionSecond</p>
             </div>
             <div class="store">
                 <a href="@linkSecond">Store</a>
@@ -205,7 +209,7 @@
                 <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
             </div>
             <div class="text">
-                <p>@descriptionBottom</p>
+                <p style="padding-left:50px;">@descriptionBottom</p>
             </div>
             <div class="store">
                 <a href="@linkBottom">Store</a>
