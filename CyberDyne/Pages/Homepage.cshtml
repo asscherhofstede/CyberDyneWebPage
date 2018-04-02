@@ -23,6 +23,7 @@
     else if (check == "adult")
     {
         Session["adult"] = true;
+        Session["admin"] = true;
     }
     else
     {
@@ -81,7 +82,8 @@
     //Eerst checken hoeveel records er zijn in de database en dan delen door 3(zo veel robots komen er per pagina)
     var recordCommand = "SELECT RobotID FROM Robot";
     var records = db.Query(recordCommand);
-    var numberOfPages = records.Count() / 3;
+    var moduloOfPages = records.Count() % 3;
+    var numberOfPages = records.Count() / 3 + moduloOfPages;
 
     //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!). 
     //Dan loop ik door de records in de database en geef ik per pagina aan wat het ID van de robot moet zijn.
@@ -98,6 +100,19 @@
                 RobotIDTop = db.QueryValue(idCommand, pageNumber);
                 RobotIDSecond = db.QueryValue(idCommand, pageNumber + 1);
                 RobotIDBottom = db.QueryValue(idCommand, pageNumber + 2);
+
+                //Hier check ik of de tweede div(robotidsecond) hetzelfde is als de bovenste(robotidtop) als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                if (RobotIDSecond == RobotIDTop)
+                {
+                    RobotIDSecond = 0;
+                }
+
+                //Hier check ik of de derde div(robotidbottom) hetzelfde is als de bovenste(robotidtop) of de tweede(robotidsecond)
+                //als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                if (RobotIDBottom == RobotIDTop || RobotIDBottom == RobotIDSecond)
+                {
+                    RobotIDBottom = 0;
+                }
                 pageNumber += 3;
             }
         }
@@ -186,41 +201,47 @@
             </div>
         </div>
 
-        <div class="robot-grid-inverse">
-            <div class="image">
-                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+        if(RobotIDSecond != 0)
+        {
+            <div class="robot-grid-inverse">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionSecond</p>
+                </div>
+                <div class="store">
+                    <a href="@linkSecond">Store</a>
+                </div>
+                <div class="info">
+                    <a href="@informationSecond">Info</a>
+                </div>
+                <div class="tutorial">
+                    <a href="@tutorialSecond">Tutorial</a>
+                </div>
             </div>
-            <div class="text">
-                <p style="padding-left:50px;">@descriptionSecond</p>
-            </div>
-            <div class="store">
-                <a href="@linkSecond">Store</a>
-            </div>
-            <div class="info">
-                <a href="@informationSecond">Info</a>
-            </div>
-            <div class="tutorial">
-                <a href="@tutorialSecond">Tutorial</a>
-            </div>
-        </div>
+        }
 
-        <div class="robot-grid">
-            <div class="image">
-                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+        if (RobotIDBottom != 0)
+        {
+            <div class="robot-grid">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionBottom</p>
+                </div>
+                <div class="store">
+                    <a href="@linkBottom">Store</a>
+                </div>
+                <div class="info">
+                    <a href="@informationBottom">Info</a>
+                </div>
+                <div class="tutorial">
+                    <a href="@tutorialBottom">Tutorial</a>
+                </div>
             </div>
-            <div class="text">
-                <p style="padding-left:50px;">@descriptionBottom</p>
-            </div>
-            <div class="store">
-                <a href="@linkBottom">Store</a>
-            </div>
-            <div class="info">
-                <a href="@informationBottom">Info</a>
-            </div>
-            <div class="tutorial">
-                <a href="@tutorialBottom">Tutorial</a>
-            </div>
-        </div>
+        }
     }
 
     <!--Hier komt de pagina buttons en dan laat ik ze dynamisch weergeven met een for loop-->
