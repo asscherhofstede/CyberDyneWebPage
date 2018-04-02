@@ -1,7 +1,13 @@
 ﻿@using System.IO;
 @{
+    //Validations
+    Validation.RequireField("name", "Je moet een naam invoeren voor de robot!");
+    Validation.RequireField("description", "Je moet een kleine beschrijving toevoegen");
+    Validation.RequireField("step1", "Je moet tenminste 1 stap toevoegen aan de tutorial");
+
     bool admin = Convert.ToBoolean(Session["admin"]);
 
+    //variabelen
     int id = 0;
     var fileName = "";
     var fileMime = "";
@@ -10,11 +16,19 @@
     var link = "";
     var tutorial = "";
     var fullInfo = "";
+    var step1 = "";
+    var step2 = "";
+    var step3 = "";
+    var step4 = "";
+    var step5 = "";
+    var step6 = "";
+    var video = "";
+
 
     //Als je op submit knop drukt
-    if (IsPost)
+    if (IsPost && Validation.IsValid())
     {
-        //Save the information in database
+        //Geef de variabelen de data van de sectie robotinformatie
         var db = Database.Open("Robot");
         name = Request.Form["name"];
         description = Request.Form["description"];
@@ -22,12 +36,26 @@
         tutorial = Request.Form["tutorial"];
         fullInfo = Request.Form["fullInfo"];
 
-        var insertCommand = "INSERT INTO Robot (Name, Description, Link, Tutorial, Information) VALUES (@0, @1, @2, @3, @4)";
-        db.Execute(insertCommand, name, description, link, tutorial, fullInfo);
+        //Geef de variabelen de data van de sectie tutorial
+        step1 = Request.Form["step1"];
+        step2 = Request.Form["step2"];
+        step3 = Request.Form["step3"];
+        step4 = Request.Form["step4"];
+        step5 = Request.Form["step5"];
+        step6 = Request.Form["step6"];
+        video = Request.Form["video"];
 
-        //hier het opvragen voor de RobotID voor het linken met de foto.
+        //insertcommand voor de tabel 'robot'
+        var insertCommandRobot = "INSERT INTO Robot (Name, Description, Link, Tutorial, Information) VALUES (@0, @1, @2, @3, @4)";
+        db.Execute(insertCommandRobot, name, description, link, tutorial, fullInfo);
+
+        //hier het opvragen voor de RobotID voor het linken met de foto en het linken met de juiste tutorial.
         var getRobotID = "SELECT RobotID FROM Robot WHERE Name = @0 AND Description = @1";
         var RobotID = db.QueryValue(getRobotID, name, description);
+
+        //insertcommand voor de tutorial
+        var insertCommandTutorial = "INSERT INTO Tutorial (Stap1, Stap2, Stap3, Stap4, Stap5, Stap6, VideoLink, RobotID) VALUES (@0, @1, @2, @3, @4, @5, @6, @7)";
+        db.Execute(insertCommandTutorial, step1, step2, step3, step4, step5, step6, video, RobotID);
 
         //Voor de foto
         var uploadedFile = Request.Files[0];
@@ -50,54 +78,93 @@
 <html>
 <head>
     <title>FileUpload Example</title>
+    <link href="~/CSS/Kevin.css" rel="stylesheet" />
 </head>
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
     @if (admin)
     {
-        <h1>FileUpload Example</h1>
+        <form class="information-grid" method="post" enctype="multipart/form-data">
+            <div class="information-upload">
+                <h1>Informatie over de robot</h1>
+                <br />
 
-        <form class="offset-5" method="post" enctype="multipart/form-data">
-            @FileUpload.GetHtml(
-                initialNumberOfFiles: 1,
-                allowMoreFilesToBeAdded: false,
-                includeFormTag: false,
-                uploadText: "Upload")
-            <div class="form-group">
-                <p class="pl-2 pt-2">Naam</p>
-                <input type="text" name="name" class="form-control col-5" placeholder="Naam" />
+                @FileUpload.GetHtml(
+                     initialNumberOfFiles: 1,
+                     allowMoreFilesToBeAdded: false,
+                     includeFormTag: false,
+                     uploadText: "Upload")
+                <div class="form-group">
+                    <p class="pl-2 pt-2">Naam</p>
+                    <input type="text" name="name" class="form-control col-5" placeholder="Naam" />@Html.ValidationMessage("name")
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <p class="pl-2">Beschrijving</p>
+                    <input type="text" name="description" class="form-control col-5" placeholder="Beschrijving" />@Html.ValidationMessage("description")
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <p class="pl-2">Link</p>
+                    <input type="text" name="link" class="form-control col-5" placeholder="Link" />
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <p class="pl-2">Tutorial</p>
+                    <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <p class="pl-2">Volledig Informatie</p>
+                    <input type="text" name="fullInfo" class="form-control col-5" placeholder="Volledige beschrijving" />
+                </div>
+            </div>
+
+            <div class="tutorial-upload">
+                <h1>Tutorial Informatie</h1>
+                <br />
+
+                <div class="form-group">
+                    <p class="pl-2">Stap 1:</p>
+                    <input type="text" name="step1" class="form-control col-5" placeholder="Stap 1" />@Html.ValidationMessage("step1")
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Stap 2:</p>
+                    <input type="text" name="step2" class="form-control col-5" placeholder="Stap 2" />
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Stap 3:</p>
+                    <input type="text" name="step3" class="form-control col-5" placeholder="Stap 3" />
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Stap 4:</p>
+                    <input type="text" name="step4" class="form-control col-5" placeholder="Stap 4" />
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Stap 5:</p>
+                    <input type="text" name="step5" class="form-control col-5" placeholder="Stap 5" />
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Stap 6:</p>
+                    <input type="text" name="step6" class="form-control col-5" placeholder="Stap 6" />
+                </div>
+                <div class="form-group">
+                    <p class="pl-2">Video link:</p>
+                    <input type="text" name="video" class="form-control col-5" placeholder="Video link" />
+                </div>
             </div>
 
             <br />
-
-            <div class="form-group">
-                <p class="pl-2">Beschrijving</p>
-                <input type="text" name="description" class="form-control col-5" placeholder="Beschrijving" />
-            </div>
-
-            <br />
-
-            <div class="form-group">
-                <p class="pl-2">Link</p>
-                <input type="text" name="link" class="form-control col-5" placeholder="Link" />
-            </div>
-
-            <br />
-
-            <div class="form-group">
-                <p class="pl-2">Tutorial</p>
-                <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
-            </div>
-
-            <br />
-
-            <div class="form-group">
-                <p class="pl-2">Volledig Informatie</p>
-                <input type="text" name="fullInfo" class="form-control col-5" placeholder="Volledige beschrijving" />
-            </div>
-            <hr />
-            <button class="btn offset-1" type="submit" value="Upload">Add robot</button>
+            <button class="btn robot-upload-info-button" type="submit" value="Upload">Add robot</button>
         </form>
 
         if(IsPost && fileName != String.Empty)

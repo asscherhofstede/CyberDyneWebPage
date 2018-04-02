@@ -12,6 +12,13 @@
     padding: 30px;
 }
 
+.information-grid {
+    display: grid;
+    grid-template-columns: 20px, 20px;
+    grid-auto-rows: auto;
+    grid-template-areas: "informationUpload tutorialUpload" "buttonUpload buttonUpload";
+    padding: 30px;
+}
 
 .robot-grid-inverse {
     display: grid;
@@ -172,4 +179,20 @@ span.psw {
     text-align: center;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.robot-upload-info-button {
+    grid-area: buttonUpload;
+    justify-self: center;
+    width: 200px;
+}
+
+.tutorial-upload {
+    grid-area: tutorialUpload;
+    padding: 20px;
+}
+
+.information-upload {
+    grid-area: informationUpload;
+    padding: 20px;
 }
