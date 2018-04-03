@@ -1,11 +1,43 @@
 ﻿@using WebMatrix.Data;
 @{
-    //Kijken op welke knop je hebt gedukt bij de startpagina
+    #region SessionControl
+    //Hier kijk je wat de vorige pagina heeft meegegeven in de URL
+    string check = Request.QueryString["view"];
+    int page = 0;
+
+    //Hier kijk ik op welke pagina je bent
+    if (Request["page"].IsInt())
+    {
+        page = Request["page"].AsInt();
+    }
+
+    //Hier kijk ik op welke knop je hebt gedrukt bij de startpagina(heb je geen knop gedrukt wordt je verwezen naar de startpagina
+    if (check == "child")
+    {
+        Session["child"] = true;
+    }
+    else if (check == "teen")
+    {
+        Session["teen"] = true;
+    }
+    else if (check == "adult")
+    {
+        Session["adult"] = true;
+        Session["admin"] = true;
+    }
+    else
+    {
+        Response.Redirect("~/Pages/beginpagina.cshtml");
+    }
+
+    //Hier geef je de variabele de waarde van de session (true/false)
     bool child = Convert.ToBoolean(Session["child"]);
     bool teen = Convert.ToBoolean(Session["teen"]);
     bool adult = Convert.ToBoolean(Session["adult"]);
+    bool admin = Convert.ToBoolean(Session["admin"]);
+    #endregion
 
-
+    #region Variabelen
     //variabelen
     int RobotIDTop;
     int RobotIDSecond;
@@ -31,9 +63,12 @@
     var informationSecond = "";
     var informationBottom = "";
 
+    #endregion
 
+    #region Database openen en queries opstellen
     //open de database en alle commands voor de data
     var db = Database.Open("Robot");
+    var idCommand = "SELECT TOP 1 RobotID FROM (SELECT TOP(@0) RobotID FROM Robot ORDER BY RobotID DESC) AS A ORDER BY RobotID";
     var idCommandTop = "SELECT TOP 1 RobotID FROM Robot ORDER BY RobotID DESC";
     var idCommandSecond = "SELECT TOP 1 RobotID FROM (SELECT TOP 2 RobotID FROM Robot ORDER BY RobotID DESC) AS A ORDER BY RobotID";
     var idCommandBottom = "SELECT TOP 1 RobotID FROM (SELECT TOP 3 RobotID FROM Robot ORDER BY RobotID DESC) AS A ORDER BY RobotID";
@@ -41,17 +76,54 @@
     RobotIDSecond = db.QueryValue(idCommandSecond);
     RobotIDBottom = db.QueryValue(idCommandBottom);
 
+    #endregion
 
-    //Hier komen die pagina if'jes
-    if (1 == 2/*Klik je op de pagina button 2 ofzo*/)
+    #region Pagina-indeling
+    //Eerst checken hoeveel records er zijn in de database en dan delen door 3(zo veel robots komen er per pagina)
+    var recordCommand = "SELECT RobotID FROM Robot";
+    var records = db.Query(recordCommand);
+    var moduloOfPages = records.Count() % 3;
+    var numberOfPages = records.Count() / 3 + moduloOfPages;
+
+    //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!). 
+    //Dan loop ik door de records in de database en geef ik per pagina aan wat het ID van de robot moet zijn.
+    if (Request["page"].IsInt())
     {
-        RobotIDTop -= 3;
-        RobotIDSecond -= 3;
-        RobotIDBottom -= 3;
+        page = Request["page"].AsInt();
+
+        if (page > 1 && numberOfPages >= page)
+        {
+            int pageNumber = 1;
+
+            for (int i = 1; i <= page; i++)
+            {
+                RobotIDTop = db.QueryValue(idCommand, pageNumber);
+                RobotIDSecond = db.QueryValue(idCommand, pageNumber + 1);
+                RobotIDBottom = db.QueryValue(idCommand, pageNumber + 2);
+
+                //Hier check ik of de tweede div(robotidsecond) hetzelfde is als de bovenste(robotidtop) als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                if (RobotIDSecond == RobotIDTop)
+                {
+                    RobotIDSecond = 0;
+                }
+
+                //Hier check ik of de derde div(robotidbottom) hetzelfde is als de bovenste(robotidtop) of de tweede(robotidsecond)
+                //als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                if (RobotIDBottom == RobotIDTop || RobotIDBottom == RobotIDSecond)
+                {
+                    RobotIDBottom = 0;
+                }
+                pageNumber += 3;
+            }
+        }
+        else
+        {
+            Response.Write("Pagina bestaat niet!!");
+        }
     }
+    #endregion
 
-
-
+    #region Queries voor de variabelen
     //Alle command voor de variabelen
     var nameCommand = "SELECT Name FROM Robot WHERE RobotID = @0";
     var descriptionCommand = "SELECT Description FROM Robot WHERE RobotID = @0";
@@ -59,7 +131,9 @@
     var tutorialCommand = "SELECT Tutorial FROM Robot WHERE RobotID = @0";
     var infoCommand = "SELECT Information FROM Robot WHERE RobotID = @0";
 
+    #endregion
 
+    #region Assignen van de variabelen
     //Geef elke variabele de data uit de database waar de id klopt
     nameTop = db.QueryValue(nameCommand, RobotIDTop);
     nameSecond = db.QueryValue(nameCommand, RobotIDSecond);
@@ -80,7 +154,7 @@
     informationTop = db.QueryValue(infoCommand, RobotIDTop);
     informationSecond = db.QueryValue(infoCommand, RobotIDSecond);
     informationBottom = db.QueryValue(infoCommand, RobotIDBottom);
-
+    #endregion
 
 }
 <!DOCTYPE html>
@@ -93,67 +167,102 @@
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
-    <div class="container-banner">
-        <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
+    @if (child)
+    {
+        Response.Write("Get Out!");
+    }
+
+    @if (teen)
+    {
+        Response.Write("Get Out!");
+    }
+
+    @if (adult || admin)
+    {
+        <div class="container-banner">
+            <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
+        </div>
+
+        <div class="robot-grid">
+            <div class="image">
+                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p style="padding-left:50px;">@descriptionTop</p>
+            </div>
+            <div class="store">
+                <a href="@linkTop">Store</a>
+            </div>
+            <div class="info">
+                <a href="@informationTop">Info</a>
+            </div>
+            <div class="tutorial">
+                <a href="Tutorial.cshtml?id=@RobotIDTop">Tutorial</a>
+            </div>
+        </div>
+
+        if(RobotIDSecond != 0)
+        {
+            <div class="robot-grid-inverse">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionSecond</p>
+                </div>
+                <div class="store">
+                    <a href="@linkSecond">Store</a>
+                </div>
+                <div class="info">
+                    <a href="@informationSecond">Info</a>
+                </div>
+                <div class="tutorial">
+                    <a href="Tutorial.cshtml?id=@RobotIDSecond">Tutorial</a>
+                </div>
+            </div>
+        }
+
+        if (RobotIDBottom != 0)
+        {
+            <div class="robot-grid">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionBottom</p>
+                </div>
+                <div class="store">
+                    <a href="@linkBottom">Store</a>
+                </div>
+                <div class="info">
+                    <a href="@informationBottom">Info</a>
+                </div>
+                <div class="tutorial">
+                    <a href="Tutorial.cshtml?id=@RobotIDBottom">Tutorial</a>
+                </div>
+            </div>
+        }
+    }
+
+    <!--Hier komt de pagina buttons en dan laat ik ze dynamisch weergeven met een for loop-->
+
+    <div class="page-navigation" style="text-align: center; margin-top: 25px; margin-bottom: 5px;">
+        @for (int i = 1; i <= numberOfPages; i++)
+        {
+            if (!Request["view"].IsEmpty())
+            {
+                var view = Request["view"];
+                <a href="Homepage.cshtml?view=@view&page=@i">@i</a>
+            }
+            else
+            {
+                <a href="Homepage.cshtml?page=@i">@i</a>
+            }
+        }
     </div>
 
-    <div class="robot-grid">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
-        </div>
-        <div class="text">
-            <p>@descriptionTop</p>
-        </div>
-        <div class="store">
-            <a href="@linkTop">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationTop">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialTop">Tutorial</a>
-        </div>
-    </div>
-
-    <div class="robot-grid-inverse">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
-        </div>
-        <div class="text">
-            <p>@descriptionSecond</p>
-        </div>
-        <div class="store">
-            <a href="@linkSecond">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationSecond">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialSecond">Tutorial</a>
-        </div>
-    </div>
-
-    <div class="robot-grid">
-        <div class="image">
-            <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
-        </div>
-        <div class="text">
-            <p>@descriptionBottom</p>
-        </div>
-        <div class="store">
-            <a href="@linkBottom">Store</a>
-        </div>
-        <div class="info">
-            <a href="@informationBottom">Info</a>
-        </div>
-        <div class="tutorial">
-            <a href="@tutorialBottom">Tutorial</a>
-        </div>
-    </div>
 
 
-
-
-@RenderPage("~/Shared/_Footer.cshtml")
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>
