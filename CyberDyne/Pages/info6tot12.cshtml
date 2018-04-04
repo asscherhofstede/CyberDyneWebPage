@@ -7,6 +7,8 @@
     <link href="~/CSS/Style.css" rel="stylesheet" />
 </head>
 <body>
+    @RenderPage("~/Shared/_Header.cshtml")
+
     <div class="header sticky-top">
         <!--Hier komt de header.-->
     </div>
@@ -33,27 +35,26 @@
                 Feit
             </div>
         </p>
-        </div>
-        <div style="text-align: center;">
-            <p>
-                <a href="#">
-                    <div class="leeftijdsbutton">
-                        Store
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="leeftijdsbutton">
-                        Info
-                    </div>
-                </a>
-                <a href="#">
-                    <div class="leeftijdsbutton">
-                        Tutorial
-                    </div>
-                </a>
-            </p>
-        </div>
-        <div class="footer">
-        </div>
+    </div>
+    <div style="text-align: center;">
+        <p>
+            <a href="#">
+                <div class="leeftijdsbutton">
+                    Store
+                </div>
+            </a>
+            <a href="#">
+                <div class="leeftijdsbutton">
+                    Info
+                </div>
+            </a>
+            <a href="#">
+                <div class="leeftijdsbutton">
+                    Tutorial
+                </div>
+            </a>
+        </p>
+    </div>
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>

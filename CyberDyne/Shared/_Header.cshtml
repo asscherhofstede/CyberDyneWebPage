@@ -1,9 +1,26 @@
 ﻿@using WebMatrix.WebData;
 @{
+    bool admin = false;
+    if (Session["admin"] != null)
+    {
+        admin = Convert.ToBoolean(Session["admin"]);
 
-    bool admin = Convert.ToBoolean(Session["admin"]);
-    bool teen = Convert.ToBoolean(Session["teen"]);
-    bool adult = Convert.ToBoolean(Session["adult"]);
+    }
+    bool teen = false;
+    if (Session["teen"] != null)
+    {
+        teen = Convert.ToBoolean(Session["teen"]);
+    }
+    bool child = false;
+    if (Session["child"] != null)
+    {
+        child = Convert.ToBoolean(Session["child"]);
+    }
+    bool adult = false;
+    if (Session["adult"] != null)
+    {
+        adult = Convert.ToBoolean(Session["adult"]);
+    }
     string name = Convert.ToString(Session["name"]);
 }
 <!DOCTYPE HTML>
@@ -15,19 +32,58 @@
 <body>
     <header class="sticky-top">
         <div class="nav">
-            <a href="#home">Home</a>
-            <a href="#news">News</a>
-            @if (admin)
+            @if (child)
             {
-                <div>
-                    <a href="#Logged in">Hello, @name </a>
-
-                </div>
-
+                <a href="Homepage.cshtml?view=child&page=1">Home</a>
             }
-            @if (adult)
+
+            @if (teen)
             {
-                    <a href="~/Pages/info12+.cshtml">~/Pages/info12+.cshtml</a>
+                <a href="Homepage.cshtml?view=teen&page=1">Home</a>
+            }
+
+            @if (adult || admin)
+            {
+                <a href="Homepage.cshtml?view=adult&page=1">Home</a>
+            }
+
+
+            <a href="~/Pages/About Me.cshtml">About Me</a>
+            @if (adult || admin)
+            {
+                <a href="~/Pages/info12+.cshtml">Robot Info</a>
+            }
+            @if (teen)
+            {
+                <a href="~/Pages/info6tot12.cshtml">Robot Info</a>
+            }
+            @if (child)
+            {
+                <a href="~/Pages/infotot6.cshtml">Robot Info</a>
+            }
+
+            @if (Session["loggedIn"] == null)
+            {
+                <div class="collapse navbar-collapse ">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Pages/Sign In Bruidspaar.cshtml">Sign In</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Pages/Sign Up Bruidspaar.cshtml">Sign Up</a>
+                        </li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="collapse navbar-collapse ">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Pages/LogOut.cshtml">Log Out</a>
+                        </li>
+                    </ul>
+                </div>
             }
         </div>
     </header>
