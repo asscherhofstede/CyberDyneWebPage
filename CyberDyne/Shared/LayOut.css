@@ -135,7 +135,12 @@ img {
     grid-template-columns: 1fr 1fr 1fr;
     background-color: #f2f2f2;
     grid-auto-rows: auto;
-    grid-template-areas: "image image image" "image image image" "step1 step2 step3" "step4 step5 step6" "step7 step7 stpe7";
+    grid-template-areas: 
+        "... image ..." 
+        "... image ..." 
+        "stap1 stap2 stap3" 
+        "stap4 stap5 stap6" 
+        "stap7 stap7 stap7";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;

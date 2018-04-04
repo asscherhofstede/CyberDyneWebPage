@@ -19,7 +19,7 @@
 
         var db = Database.Open("Robot");
         var selectCommandName = "SELECT Name FROM Robot WHERE RobotID = @0";
-        var selectCommandStore = "SELECT winkel FROM Robot Where RobotID = @0";
+        var selectCommandStore = "SELECT Link FROM Robot Where RobotID = @0";
         var step1Command = "SELECT Stap1 FROM Tutorial WHERE RobotID = @0";
         var step2Command = "SELECT Stap2 FROM Tutorial WHERE RobotID = @0";
         var step3Command = "SELECT Stap3 FROM Tutorial WHERE RobotID = @0";
@@ -65,8 +65,8 @@
 
             <div class="information-page-grid">
                 <!--Image-->
-                <div class="image">
-                    <img class="image-grid" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
+                <div class="image img-fluid">
+                    <img class="image-grid img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
                 </div>
                 <!--stappen-->
                 <div class="step1">
