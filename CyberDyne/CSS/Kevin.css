@@ -3,7 +3,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
     background-color: #f2f2f2;
     grid-auto-rows: auto;
-    grid-template-areas: "image text text text" "image ..... ..... ....." "image store info tutorial";
+    grid-template-areas: "image text text text" "image ..... ..... ....." "image .... store ....";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;
@@ -24,7 +24,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-auto-rows: auto;
-    grid-template-areas: "text text text image" "..... ..... ..... image" "tutorial info store image";
+    grid-template-areas: "text text text image" "..... ..... ..... image" "... store ... image";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;
@@ -50,7 +50,7 @@
 @media (max-width: 940px) {
     .robot-grid, .robot-grid-inverse {
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-areas: "image image image" "text text text" "store info tutorial";
+        grid-template-areas: "image image image" "text text text" "... store ...";
     }
 
     .image {
