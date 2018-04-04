@@ -4,6 +4,7 @@
     bool admin = Convert.ToBoolean(Session["admin"]);
     bool teen = Convert.ToBoolean(Session["teen"]);
     bool adult = Convert.ToBoolean(Session["adult"]);
+    bool child = Convert.ToBoolean(Session["child"]);
     string name = Convert.ToString(Session["name"]);
 }
 <!DOCTYPE HTML>
@@ -19,15 +20,19 @@
             <a href="#news">News</a>
             @if (admin)
             {
-                <div>
-                    <a href="#Logged in">Hello, @name </a>
-
-                </div>
-
+                    <a href="~/Pages/info12+.cshtml">Robot Info</a>
             }
             @if (adult)
             {
-                    <a href="~/Pages/info12+.cshtml">~/Pages/info12+.cshtml</a>
+                    <a href="~/Pages/info12+.cshtml">Robot Info</a>
+            }
+            @if (teen)
+            {
+                <a href="~/Pages/info6tot12.cshtml">Robot Info</a>
+            }
+            @if (child)
+            {
+                <a href="~/Pages/infotot6.cshtml">Robot Info</a>
             }
         </div>
     </header>
