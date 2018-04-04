@@ -83,37 +83,43 @@
     var recordCommand = "SELECT RobotID FROM Robot";
     var records = db.Query(recordCommand);
     var moduloOfPages = records.Count() % 3;
-    var numberOfPages = records.Count() / 3 + moduloOfPages;
-
+    var numberOfPages = records.Count() / 3;
+    if (moduloOfPages > 0)
+    {
+        numberOfPages = records.Count() / 3 + 1;
+    }
     //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!). 
     //Dan loop ik door de records in de database en geef ik per pagina aan wat het ID van de robot moet zijn.
     if (Request["page"].IsInt())
     {
         page = Request["page"].AsInt();
 
-        if (page > 1 && numberOfPages >= page)
+        if (page >= 1)
         {
-            int pageNumber = 1;
-
-            for (int i = 1; i <= page; i++)
+            if (page > 1 && numberOfPages >= page)
             {
-                RobotIDTop = db.QueryValue(idCommand, pageNumber);
-                RobotIDSecond = db.QueryValue(idCommand, pageNumber + 1);
-                RobotIDBottom = db.QueryValue(idCommand, pageNumber + 2);
+                int pageNumber = 1;
 
-                //Hier check ik of de tweede div(robotidsecond) hetzelfde is als de bovenste(robotidtop) als dat zo is betekent dat dat het dezelfde records zijn uit de database.
-                if (RobotIDSecond == RobotIDTop)
+                for (int i = 1; i <= page; i++)
                 {
-                    RobotIDSecond = 0;
-                }
+                    RobotIDTop = db.QueryValue(idCommand, pageNumber);
+                    RobotIDSecond = db.QueryValue(idCommand, pageNumber + 1);
+                    RobotIDBottom = db.QueryValue(idCommand, pageNumber + 2);
 
-                //Hier check ik of de derde div(robotidbottom) hetzelfde is als de bovenste(robotidtop) of de tweede(robotidsecond)
-                //als dat zo is betekent dat dat het dezelfde records zijn uit de database.
-                if (RobotIDBottom == RobotIDTop || RobotIDBottom == RobotIDSecond)
-                {
-                    RobotIDBottom = 0;
+                    //Hier check ik of de tweede div(robotidsecond) hetzelfde is als de bovenste(robotidtop) als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                    if (RobotIDSecond == RobotIDTop)
+                    {
+                        RobotIDSecond = 0;
+                    }
+
+                    //Hier check ik of de derde div(robotidbottom) hetzelfde is als de bovenste(robotidtop) of de tweede(robotidsecond)
+                    //als dat zo is betekent dat dat het dezelfde records zijn uit de database.
+                    if (RobotIDBottom == RobotIDTop || RobotIDBottom == RobotIDSecond)
+                    {
+                        RobotIDBottom = 0;
+                    }
+                    pageNumber += 3;
                 }
-                pageNumber += 3;
             }
         }
         else

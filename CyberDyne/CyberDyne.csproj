@@ -123,7 +123,6 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Pages\LogInPage.cshtml" />
     <Content Include="Pages\TermsAndCondition.cshtml" />
     <Content Include="Pages\CreatAccount.cshtml" />
     <None Include="packages.config" />
@@ -151,6 +150,7 @@
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="_AppStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\esm\popper-utils.js" />

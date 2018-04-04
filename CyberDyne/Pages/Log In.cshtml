@@ -1,19 +1,47 @@
-﻿<!DOCTYPE html>
+﻿@using WebMatrix.WebData;
+@using WebMatrix.Data;
+@{ 
+    Validation.RequireField("UserName", "U heeft niets ingevoerd");
+    Validation.RequireField("PassWord", "U heeft niets ingevoerd");
+
+
+    if (IsPost && Validation.IsValid())
+    {
+        var db = Database.Open("Robot");
+        string UserName = Request.Form["UserName"];
+        string PassWord = Request.Form["PassWord"];
+        string CheckCommand = "SELECT AdminId FROM Admin WHERE UserName = @0 AND PassWord = @1";
+        var Check = db.Query(CheckCommand, UserName, PassWord);
+
+        if(Check != null)
+        {
+            Session["admin"] = true;
+            Session["name"] = UserName;
+            Response.Redirect("~/Pages/Homepage.cshtml");
+        }
+    }
+
+    Response.Write("IsFeyenoord = degradatie");
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <link href="~/CSS/Style.css" rel="stylesheet" />
+    <link href="~/CSS/Kevin.css" rel="stylesheet" />
 </head>
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
     <div class="border center">
-        <form action="/action_page.php">
+        <form method="post">
             <div class="container">
-                <label for="uname"><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                <label for="UserName"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="UserName" required>
 
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <label for="PassWord"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="PassWord" required>
 
                 <button type="submit">Login</button>
                 <label>
@@ -28,6 +56,8 @@
         </form>
     </div>
 
-    @RenderPage("~/Shared/_Footer.cshtml")
+    <div class="fixed-bottom">
+        @RenderPage("~/Shared/_Footer.cshtml")
+    </div>
 </body>
 </html>
