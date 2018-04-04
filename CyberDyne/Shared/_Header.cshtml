@@ -2,6 +2,8 @@
 @{
 
     bool admin = Convert.ToBoolean(Session["admin"]);
+    bool teen = Convert.ToBoolean(Session["teen"]);
+    bool adult = Convert.ToBoolean(Session["adult"]);
     string name = Convert.ToString(Session["name"]);
 }
 <!DOCTYPE HTML>
@@ -22,6 +24,10 @@
 
                 </div>
 
+            }
+            @if (adult)
+            {
+                    <a href="~/Pages/info12+.cshtml">~/Pages/info12+.cshtml</a>
             }
         </div>
     </header>
