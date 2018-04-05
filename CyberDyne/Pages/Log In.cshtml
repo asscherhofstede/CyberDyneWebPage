@@ -1,0 +1,88 @@
+﻿@using WebMatrix.Data;
+@{
+
+    var username = "";
+    var password = "";
+    var errorMessage = "";
+
+    Validation.RequireField("UserName", "U heeft niets ingevoerd");
+    Validation.RequireField("PassWord", "U heeft niets ingevoerd");
+
+
+    if (IsPost)
+    {
+        username = Request["username"];
+        password = Request["password"];
+        if (WebSecurity.Login(username, password, true))
+        {
+            Session["LoggedIn"] = true;
+            Response.Redirect("~/Pages/Homepage.cshtml?view=adult&page=1");
+
+        }
+
+        else
+
+        {
+
+            errorMessage = "Login was not successful.";
+            Session["LoggedIn"] = false;
+        }
+
+
+
+        /*if (IsPost && Validation.IsValid())
+        {
+            var db = Database.Open("Robot");
+            string UserName = Request.Form["UserName"];
+            string PassWord = Request.Form["PassWord"];
+            string CheckCommand = "SELECT AdminId FROM Admin WHERE UserName = @0 AND PassWord = @1";
+            var Check = db.Query(CheckCommand, UserName, PassWord);
+
+            if(Check != null)
+            {
+                Session["admin"] = true;
+                Session["name"] = UserName;
+                Response.Redirect("~/Pages/Homepage.cshtml");
+            }
+        }*/
+        Response.Write("IsFeyeNoord = Kampioen");
+    }
+    Response.Write(errorMessage);
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/CSS/Style.css" rel="stylesheet" />
+    <link href="~/CSS/Kevin.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Shared/_Header.cshtml")
+
+    <div class="border center">
+        <form method="post">
+            <div class="container">
+                <label for="UserName"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="UserName" required>
+
+                <label for="PassWord"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="PassWord" required>
+
+                <button type="submit">Login</button>
+                <label>
+                    <input type="checkbox" checked="checked" name="remember"> Remember me
+                </label>
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
+    </div>
+
+    <div class="fixed-bottom">
+        @RenderPage("~/Shared/_Footer.cshtml")
+    </div>
+</body>
+</html>

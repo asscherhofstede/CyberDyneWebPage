@@ -1,0 +1,136 @@
+﻿@{
+    //robotinformatie
+    var naam = "";
+    var link = "";
+    var information = "";
+    var step1 = "";
+    var step2 = "";
+    var step3 = "";
+    var step4 = "";
+    var step5 = "";
+    var step6 = "";
+    var video = "";
+
+
+
+    int robotID = 0;
+    if (Request["RobotID"].IsInt())
+    {
+        robotID = Request["RobotID"].AsInt();
+
+        var db = Database.Open("Robot");
+        var selectCommandName = "SELECT Name FROM Robot WHERE RobotID = @0";
+        var selectCommandStore = "SELECT Link FROM Robot Where RobotID = @0";
+        var step1Command = "SELECT Stap1 FROM Tutorial WHERE RobotID = @0";
+        var step2Command = "SELECT Stap2 FROM Tutorial WHERE RobotID = @0";
+        var step3Command = "SELECT Stap3 FROM Tutorial WHERE RobotID = @0";
+        var step4Command = "SELECT Stap4 FROM Tutorial WHERE RobotID = @0";
+        var step5Command = "SELECT Stap5 FROM Tutorial WHERE RobotID = @0";
+        var step6Command = "SELECT Stap6 FROM Tutorial WHERE RobotID = @0";
+        var videoCommand = "SELECT VideoLink FROM Tutorial WHERE RobotID = @0";
+        var informationCommand = "SELECT Information FROM Robot WHERE RobotID  =@0";
+        naam = db.QueryValue(selectCommandName, robotID);
+        link = db.QueryValue(selectCommandStore, robotID);
+        step1 = db.QueryValue(step1Command, robotID);
+        step2 = db.QueryValue(step2Command, robotID);
+        step3 = db.QueryValue(step3Command, robotID);
+        step4 = db.QueryValue(step4Command, robotID);
+        step5 = db.QueryValue(step5Command, robotID);
+        step6 = db.QueryValue(step6Command, robotID);
+        video = db.QueryValue(videoCommand, robotID);
+        information = db.QueryValue(informationCommand, robotID);
+    }
+
+
+
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>(Naam_Robot)</title>
+    <link href="~/Shared/LayOut.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body class="body">
+    @RenderPage("~/Shared/_Header.cshtml")
+    <div class="boxie1">
+        <div class="information-page-grid">
+
+            <div class="naam">
+                <h1 style="text-align: center;">@naam</h1>
+            </div>
+
+            <div class="image">
+                <img class="image img-fluid" style="max-height: 200px;" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
+            </div>
+
+            <div class="info">
+                <p>@information</p>
+            </div>
+            <div class="store">
+                <a href="@link">Store</a>
+            </div>
+
+        </div>
+    </div>
+    <!--tutorial-->
+    <div class="boxie2">
+        <div class="tutorial-page-grid">
+            <!--stappen-->
+            <div class="step1">
+                <h2>Stap 1</h2>
+                <p>@step1</p>
+            </div>
+
+            <div class="step2">
+                <h2>Stap 2</h2>
+                <p>@step2</p>
+                @if (robotID % 2 == 0)
+                {
+                    <img src = "~/Images/robot-maken.jpg" />
+                }
+                else if (robotID % 2 != 0)
+                {
+                    <img src = "~/Images/interview-je-eigen-robot-bouwen.jpg" />
+                }
+            </div>
+            <div class="step3">
+                <h2>Stap 3</h2>
+                <p>@step3</p>
+            </div>
+            <div class="step4">
+                <h2>Stap 4</h2>
+                <p>@step4</p>
+            </div>
+            <div class="step5">
+                <h2>Stap 5</h2>
+                <p>@step5</p>
+                @if (robotID % 2 == 0)
+                {
+                    <img src = "~/Images/1100-robots.jpg" />
+                }
+                else if (robotID % 2 != 0)
+                {
+                    <img src = "~/Images/images.jpg" />
+                }
+
+            </div>
+            <div class="step6">
+                <h2>Stap 6</h2>
+                <p>@step6</p>
+            </div>
+            <div class="video">
+                <h2>Niet Gelukt? Hier een video!</h2>
+                <iframe width="420" height="315"
+                        src=@video></iframe>
+            </div>
+
+        </div>
+    </div>
+
+    @RenderPage("~/Shared/_Footer.cshtml")
+</body>
+</html>
+

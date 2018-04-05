@@ -1,0 +1,72 @@
+﻿@using WebMatrix.WebData;
+@{
+    var value = WebSecurity.CurrentUserName;
+    bool admin = false;
+    if (Session["admin"] != null)
+    {
+        admin = Convert.ToBoolean(Session["admin"]);
+
+    }
+    bool teen = false;
+    if (Session["teen"] != null)
+    {
+        teen = Convert.ToBoolean(Session["teen"]);
+    }
+    bool child = false;
+    if (Session["child"] != null)
+    {
+        child = Convert.ToBoolean(Session["child"]);
+    }
+    bool adult = false;
+    if (Session["adult"] != null)
+    {
+        adult = Convert.ToBoolean(Session["adult"]);
+    }
+    string name = Convert.ToString(Session["name"]);
+
+    bool loggedIn = false;
+    if (Session["LoggedIn"] != null)
+    {
+        loggedIn = Convert.ToBoolean(Session["LoggedIn"]);
+    }
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link href="~/Shared/LayOut.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="sticky-top">
+        <div class="nav">
+            @if (child)
+            {
+                <a href="Homepage.cshtml?view=child&page=1">Home</a>
+                <a href="~/Pages/LogOut.cshtml">Log Out</a>
+            }
+
+            @if (teen)
+            {
+                <a href="Homepage.cshtml?view=teen&page=1">Home</a>
+                <a href="~/Pages/LogOut.cshtml">Log Out</a>
+            }
+
+            @if (adult || admin)
+            {
+                <a href="Homepage.cshtml?view=adult&page=1">Home</a>
+                if (loggedIn == true)
+                {
+                    <a href="~/Pages/Log In.cshtml">Sign In</a>
+                    <a href="~/Pages/CreatAccount.cshtml">Sign Up</a>
+                }
+                else
+                {
+                    <p style="color: #fff; align-self: center;">Hello, @value</p>
+                    <a href="~/Pages/LogOut.cshtml">Log Out</a>
+                }
+            }
+
+        </div>
+    </header>
+</body>
+</html>

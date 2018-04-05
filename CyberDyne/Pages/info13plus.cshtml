@@ -1,0 +1,51 @@
+﻿@{
+    //robotinformatie
+    var naam = "";
+    var link = "";
+    var information = "";
+    int robotID;
+    if (Request["RobotID"].IsInt())
+    {
+        robotID = Request["RobotID"].AsInt();
+
+        var db = Database.Open("Robot");
+        var selectCommandName = "SELECT Name FROM Robot WHERE RobotID = @0";
+        var selectCommandStore = "SELECT winkel FROM Robot Where RobotID = @0";
+        naam = db.QueryValue(selectCommandName, robotID);
+        link = db.QueryValue(selectCommandStore, robotID);
+    }
+
+
+
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>(Naam_Robot)</title>
+    <link href="~/Shared/LayOut.css" rel="stylesheet" />
+    <a href="~/Pages/info12plus.cshtml">~/Pages/info12plus.cshtml</a>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Shared/_Header.cshtml")
+
+    <div class="boxie1">
+        <p> hfalnflanfwalnf</p>
+        </br>
+        <p> guhalnalnclwain</p>
+        <hr />
+        <p> obavnailwvn</p>
+
+    </div>
+    <div class="boxie2">
+        <p> nalnwcliwancalncwnciaownclawknicaiwcnlaincaiwlcnailwncailw niacnaiwnwilcnwaicnawocnawicnawicaw
+        cawmciawcipcnawipc</br> niwaonfiwnvwiwanINVaiw</p>
+
+    </div>
+
+    @RenderPage("~/Shared/_Footer.cshtml")
+</body>
+</html>
+

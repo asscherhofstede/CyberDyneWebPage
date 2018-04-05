@@ -1,0 +1,48 @@
+﻿@{
+    Session.Clear();
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Naam_robot</title>
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/CSS/Davidtrojanhorse.css" rel="stylesheet" />
+</head>
+<body>
+    @RenderPage("~/Shared/_Header.cshtml")
+
+    <div class="container-banner">
+        <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner" width="1920">
+    </div>
+
+    <div class="center">
+        <p>
+            <div style="text-align:center">
+
+                <a href="Homepage.cshtml?view=child&page=1">
+                    <div class="leeftijdsbutton">
+                        3 t/m 8
+                    </div>
+                </a>
+                <a href="Homepage.cshtml?view=teen&page=1">
+                    <div class="leeftijdsbutton">
+                        9 t/m 12
+                    </div>
+                </a>
+                <a href="Homepage.cshtml?view=adult&page=1">
+                    <div class="leeftijdsbutton">
+                        13 en ouder
+                    </div>
+                </a>
+
+
+            </div>
+        </p>
+    </div>
+
+    <div class="fixed-bottom">
+        @RenderPage("~/Shared/_Footer.cshtml")
+    </div>
+</body>
+</html>
