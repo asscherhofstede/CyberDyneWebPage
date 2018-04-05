@@ -145,6 +145,7 @@
     <Content Include="Shared\_Header.cshtml" />
     <Content Include="Shared\_Footer.cshtml" />
     <Content Include="Pages\info6tot12.cshtml" />
+    <Content Include="Pages\LogOut.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
