@@ -10,6 +10,7 @@
     var step5 = "";
     var step6 = "";
     var video = "";
+    var information = "";
 
 
     int robotID = 0;
@@ -27,6 +28,7 @@
         var step5Command = "SELECT Stap5 FROM Tutorial WHERE RobotID = @0";
         var step6Command = "SELECT Stap6 FROM Tutorial WHERE RobotID = @0";
         var videoCommand = "SELECT VideoLink FROM Tutorial WHERE RobotID = @0";
+        var informationCommand = "SELECT Information FROM Robot WHERE RobotID  =@0";
         naam = db.QueryValue(selectCommandName, robotID);
         link = db.QueryValue(selectCommandStore, robotID);
         step1 = db.QueryValue(step1Command, robotID);
@@ -36,6 +38,7 @@
         step5 = db.QueryValue(step5Command, robotID);
         step6 = db.QueryValue(step6Command, robotID);
         video = db.QueryValue(videoCommand, robotID);
+        information = db.QueryValue(informationCommand, robotID);
     }
 
 
@@ -52,7 +55,25 @@
 </head>
 <body class="body">
     @RenderPage("~/Shared/_Header.cshtml")
+    <div class="boxie1">
+        <div class="information-page-grid">
+            <div class="img">
 
+
+            </div>
+
+
+            <div class="info">
+                <p>@information</p>
+            </div>
+            
+
+
+        </div>
+
+       
+
+    </div>
     <img />
     
 
@@ -63,7 +84,7 @@
 
 
 
-            <div class="information-page-grid">
+            <div class="tutorial-page-grid">
                 <!--Image-->
                 <div class="image img-fluid">
                     <img class="image-grid img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
