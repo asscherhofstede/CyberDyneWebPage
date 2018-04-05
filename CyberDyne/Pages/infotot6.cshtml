@@ -78,6 +78,16 @@
     <!--tutorial-->
     <div class="boxie2">
         <div class="tutorial-page-grid">
+            <div class="pic1">
+                @if (robotID % 2 == 0)
+                {
+                    <img src="/Images/robot-maken.jpg" />
+                }
+                else if (robotID % 2 != 0)
+                {
+                    <img src="/Images/interview-je-eigen-robot-bouwen.jpg" />
+                }
+            </div>
             <!--stappen-->
             <div class="step1">
                 <h2>Stap 1</h2>
@@ -87,14 +97,7 @@
             <div class="step2">
                 <h2>Stap 2</h2>
                 <p>@step2</p>
-                @if (robotID % 2 == 0)
-                {
-                    <img src = "~/Images/robot-maken.jpg" />
-                }
-                else if (robotID % 2 != 0)
-                {
-                    <img src = "~/Images/interview-je-eigen-robot-bouwen.jpg" />
-                }
+
             </div>
             <div class="step3">
                 <h2>Stap 3</h2>
@@ -107,19 +110,22 @@
             <div class="step5">
                 <h2>Stap 5</h2>
                 <p>@step5</p>
-                @if (robotID % 2 == 0)
-                {
-                    <img src = "~/Images/1100-robots.jpg" />
-                }
-                else if (robotID % 2 != 0)
-                {
-                    <img src = "~/Images/images.jpg" />
-                }
+
 
             </div>
             <div class="step6">
                 <h2>Stap 6</h2>
                 <p>@step6</p>
+            </div>
+            <div class="pic2">
+                @if (robotID % 2 == 0)
+                {
+                    <img src="/Images/1100-robots.jpg" />
+                }
+                else if (robotID % 2 != 0)
+                {
+                    <img src="/Images/images.jpg" />
+                }
             </div>
             <div class="video">
                 <h2>Niet Gelukt? Hier een video!</h2>

@@ -2,6 +2,12 @@
 @{
     var value = WebSecurity.CurrentUserName;
     string name = Convert.ToString(Session["name"]);
+    var view = "";
+
+    if (!Request.QueryString["view"].IsEmpty())
+    {
+        view = Request.QueryString["view"];
+    }
 
     bool admin = false;
     bool teen = false;
@@ -10,23 +16,30 @@
     bool loggedIn = false;
 
 
+    string check = Request.QueryString["view"];
+    if (check == "child")
+    {
+        child = true;
+    }
+    if (check == "teen")
+    {
+        teen = true;
+    }
+    if (check == "adult")
+    {
+        adult = true;
+    }
+    if (check == "child")
+    {
+        child = true;
+    }
 
     if (Session["admin"] != null)
     {
-        admin = Convert.ToBoolean(Session["admin"]);
+        admin = true;
     }
-    if (Session["teen"] != null)
-    {
-        teen = Convert.ToBoolean(Session["teen"]);
-    }
-    if (Session["child"] != null)
-    {
-        child = Convert.ToBoolean(Session["child"]);
-    }
-    if (Session["adult"] != null)
-    {
-        adult = Convert.ToBoolean(Session["adult"]);
-    }
+
+
     if (Session["LoggedIn"] != null)
     {
         loggedIn = Convert.ToBoolean(Session["LoggedIn"]);
@@ -45,70 +58,81 @@
             {
                 if (child)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=child&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="Homepage.cshtml?view=child&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/Upload.cshtml">Upload</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/LogOut.cshtml">Log Out</a>
+                        <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
+                        <a href="Homepage.cshtml?view=adult&page=1">Adult</a>
+                        <a href="~/Pages/LogOut.cshtml">Log Out</a>
                     </div>
                 }
                 if (teen)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=teen&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml"></a>
+                    <a href="Homepage.cshtml?view=teen&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/Upload.cshtml">Upload</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/LogOut.cshtml">Log Out</a>
+                        <a href="Homepage.cshtml?view=child&page=1">Child</a>
+                        <a href="Homepage.cshtml?view=adult&page=1">Adult</a>
+                        <a href="~/Pages/LogOut.cshtml">Log Out</a>
                     </div>
                 }
                 if (adult)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=adult&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml"></a>
+                    <a href="Homepage.cshtml?view=adult&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/Upload.cshtml">Upload</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/LogOut.cshtml">Log Out</a>
-                    </div>
-                }
-                if (admin)
-                {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=adult&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml"></a>
-                    <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/LogOut.cshtml">Log Out</a>
+                        <a href="Homepage.cshtml?view=child&page=1">Child</a>
+                        <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
+                        <a href="~/Pages/LogOut.cshtml">Log Out</a>
                     </div>
                 }
                 else
                 {
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/beginpagina.cshtml">Home</a>
+                    <a href="Homepage.cshtml?view=@view&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/Upload.cshtml">Upload</a>
+                    <div class="ml-auto">
+                        <a href="Homepage.cshtml?view=child&page=1">Child</a>
+                        <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
+                        <a href="~/Pages/LogOut.cshtml">Log Out</a>
+                    </div>
                 }
             }
             @if (loggedIn == false)
             {
                 if (child)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=child&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="Homepage.cshtml?view=child&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/Log In.cshtml">Log In</a>
+                        <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>
                 }
                 if (teen)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=teen&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="Homepage.cshtml?view=teen&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/Log In.cshtml">Log In</a>
+                        <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>
                 }
                 if (adult)
                 {
-                    <a style="text-decoration:none; color: #fff" href="Homepage.cshtml?view=adult&page=1">Home</a>
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="Homepage.cshtml?view=adult&page=1">Home</a>
+                    <a href="~/Pages/About Me.cshtml">About Me</a>
                     <div class="ml-auto">
-                        <a style="text-decoration:none; color: #fff" href="~/Pages/Log In.cshtml">Log In</a>
+                        <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>
                 }
-                else
+                if (child == false && teen == false && adult == false && admin == false)
                 {
-                    <a style="text-decoration:none; color: #fff" href="~/Pages/beginpagina.cshtml">Home</a>
+                    <a href="~/Pages/beginpagina.cshtml">Home</a>
+                    <div class="ml-auto">
+                        <a href="~/Pages/Log In.cshtml">Log In</a>
+                    </div>
                 }
             }
 

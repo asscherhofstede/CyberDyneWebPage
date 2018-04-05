@@ -38,7 +38,8 @@
     grid-template-columns: 1fr 1fr;
     background-color: #f2f2f2;
     grid-auto-rows: auto;
-    grid-template-areas: "text image" ". image" "text2 image";
+    grid-template-areas: 
+        "text image";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;

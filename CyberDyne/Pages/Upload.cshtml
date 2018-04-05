@@ -5,7 +5,7 @@
     Validation.RequireField("description", "Je moet een kleine beschrijving toevoegen");
     Validation.RequireField("step1", "Je moet tenminste 1 stap toevoegen aan de tutorial");
 
-    bool admin = Convert.ToBoolean(Session["admin"]);
+    bool admin = Convert.ToBoolean(Session["LoggedIn"]);
 
     //variabelen
     int id = 0;
@@ -85,7 +85,7 @@
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
-    @if (admin == false)
+    @if (admin)
     {
         <form class="information-grid" method="post" enctype="multipart/form-data">
             <div class="information-upload">
@@ -94,7 +94,7 @@
 
                 @FileUpload.GetHtml(
                      initialNumberOfFiles: 1,
-                     allowMoreFilesToBeAdded: true,
+                     allowMoreFilesToBeAdded: false,
                      includeFormTag: false,
                      uploadText: "Upload")
                 <div class="form-group">
@@ -113,14 +113,7 @@
 
                 <div class="form-group">
                     <p class="pl-2">Link</p>
-                    <input type="text" name="link" class="form-control col-5" placeholder="Link" />
-                </div>
-
-                <br />
-
-                <div class="form-group">
-                    <p class="pl-2">Tutorial</p>
-                    <input type="text" name="tutorial" class="form-control col-5" placeholder="Tutorial" />
+                    <input type="text" name="link" class="form-control col-5" value="Https://" />
                 </div>
 
                 <br />

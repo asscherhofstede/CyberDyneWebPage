@@ -3,6 +3,10 @@
     #region SessionControl
     //Hier kijk je wat de vorige pagina heeft meegegeven in de URL
     string check = Request.QueryString["view"];
+    bool admin = Convert.ToBoolean(Session["LoggedIn"]);
+
+
+
     int page = 0;
 
     //Hier kijk ik op welke pagina je bent
@@ -15,15 +19,20 @@
     if (check == "child")
     {
         Session["child"] = true;
+        Session["teen"] = false;
+        Session["adult"] = false;
     }
     else if (check == "teen")
     {
+        Session["child"] = false;
         Session["teen"] = true;
+        Session["adult"] = false;
     }
     else if (check == "adult")
     {
+        Session["child"] = false;
+        Session["teen"] = false;
         Session["adult"] = true;
-        Session["admin"] = true;
     }
     else
     {
@@ -34,7 +43,6 @@
     bool child = Convert.ToBoolean(Session["child"]);
     bool teen = Convert.ToBoolean(Session["teen"]);
     bool adult = Convert.ToBoolean(Session["adult"]);
-    bool admin = Convert.ToBoolean(Session["admin"]);
     #endregion
 
     #region Variabelen
@@ -55,10 +63,6 @@
     var linkSecond = "";
     var linkBottom = "";
 
-    var tutorialTop = "";
-    var tutorialSecond = "";
-    var tutorialBottom = "";
-
     var informationTop = "";
     var informationSecond = "";
     var informationBottom = "";
@@ -77,7 +81,7 @@
     RobotIDBottom = db.QueryValue(idCommandBottom);
 
     //Gewoon checken of er wel genoeg records staan in de database
-    if(RobotIDSecond == RobotIDTop)
+    if (RobotIDSecond == RobotIDTop)
     {
         RobotIDSecond = 0;
     }
@@ -98,7 +102,7 @@
     {
         numberOfPages = records.Count() / 3 + 1;
     }
-    //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!). 
+    //Hier kijk je eerst of er ook page='integer' in de URL staat. Dan kijk ik of het ook boven de 1 is en of het niet hoger is dan het aantal pagina's (numberOfPages)(Never trust the user!).
     //Dan loop ik door de records in de database en geef ik per pagina aan wat het ID van de robot moet zijn.
     if (Request["page"].IsInt())
     {
@@ -144,7 +148,6 @@
     var nameCommand = "SELECT Name FROM Robot WHERE RobotID = @0";
     var descriptionCommand = "SELECT Description FROM Robot WHERE RobotID = @0";
     var linkCommand = "SELECT Link FROM Robot WHERE RobotID = @0";
-    var tutorialCommand = "SELECT Tutorial FROM Robot WHERE RobotID = @0";
     var infoCommand = "SELECT Information FROM Robot WHERE RobotID = @0";
 
     #endregion
@@ -162,10 +165,6 @@
     linkTop = db.QueryValue(linkCommand, RobotIDTop);
     linkSecond = db.QueryValue(linkCommand, RobotIDSecond);
     linkBottom = db.QueryValue(linkCommand, RobotIDBottom);
-
-    tutorialTop = db.QueryValue(tutorialCommand, RobotIDTop);
-    tutorialSecond = db.QueryValue(tutorialCommand, RobotIDSecond);
-    tutorialBottom = db.QueryValue(tutorialCommand, RobotIDBottom);
 
     informationTop = db.QueryValue(infoCommand, RobotIDTop);
     informationSecond = db.QueryValue(infoCommand, RobotIDSecond);
@@ -185,15 +184,54 @@
 
     @if (child)
     {
-        Response.Write("Get Out!");
+        <div class="container-banner">
+            <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
+        </div>
+
+        <div class="robot-grid">
+            <div class="image">
+                <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p style="padding-left:50px;">@descriptionTop</p>
+            </div>
+            <div class="store">
+                <a href="~/Pages/infotot6.cshtml?RobotID=@RobotIDTop&view=child">Read more</a>
+            </div>
+        </div>
+
+        if (RobotIDSecond != 0)
+        {
+            <div class="robot-grid-inverse">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionSecond</p>
+                </div>
+                <div class="store">
+                    <a href="~/Pages/infotot6.cshtml?RobotID=@RobotIDSecond&view=child">Read more</a>
+                </div>
+            </div>
+        }
+
+        if (RobotIDBottom != 0)
+        {
+            <div class="robot-grid">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionBottom</p>
+                </div>
+                <div class="store">
+                    <a href="~/Pages/infotot6.cshtml?RobotID=@RobotIDBottom&view=child">Read more</a>
+                </div>
+            </div>
+        }
     }
 
     @if (teen)
-    {
-        Response.Write("Get Out!");
-    }
-
-    @if (adult || admin)
     {
         <div class="container-banner">
             <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
@@ -207,11 +245,60 @@
                 <p style="padding-left:50px;">@descriptionTop</p>
             </div>
             <div class="store">
-                <a href="~/Pages/Informatie.cshtml?RobotID=@RobotIDTop">Read more</a>
+                <a href="~/Pages/info6tot12.cshtml?RobotID=@RobotIDTop&view=teen">Read more</a>
             </div>
         </div>
 
-        if(RobotIDSecond != 0)
+        if (RobotIDSecond != 0)
+        {
+            <div class="robot-grid-inverse">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDSecond" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionSecond</p>
+                </div>
+                <div class="store">
+                    <a href="~/Pages/info6tot12.cshtml?RobotID=@RobotIDSecond&view=teen">Read more</a>
+                </div>
+            </div>
+        }
+
+        if (RobotIDBottom != 0)
+        {
+            <div class="robot-grid">
+                <div class="image">
+                    <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDBottom" alt="Er is geen foto beschikbaar" />
+                </div>
+                <div class="text">
+                    <p style="padding-left:50px;">@descriptionBottom</p>
+                </div>
+                <div class="store">
+                    <a href="~/Pages/info6tot12.cshtml?RobotID=@RobotIDBottom&view=teen">Read more</a>
+                </div>
+            </div>
+        }
+    }
+
+    @if (adult)
+    {
+        <div class="container-banner">
+            <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner">
+        </div>
+
+        <div class="robot-grid">
+            <div class="image">
+                <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+            </div>
+            <div class="text">
+                <p style="padding-left:50px;">@descriptionTop</p>
+            </div>
+            <div class="store">
+                <a href="~/Pages/Informatie.cshtml?RobotID=@RobotIDTop&view=adult">Read more</a>
+            </div>
+        </div>
+
+        if (RobotIDSecond != 0)
         {
             <div class="robot-grid-inverse">
                 <div class="image">
@@ -227,7 +314,7 @@
                     <a href="@informationSecond">Info</a>
                 </div>
                 <div class="tutorial">
-                    <a href="Tutorial.cshtml?id=@RobotIDSecond">Tutorial</a>
+                    <a href="Tutorial.cshtml?id=@RobotIDSecond&view=adult">Tutorial</a>
                 </div>
             </div>
         }
@@ -248,7 +335,7 @@
                     <a href="@informationBottom">Info</a>
                 </div>
                 <div class="tutorial">
-                    <a href="Tutorial.cshtml?id=@RobotIDBottom">Tutorial</a>
+                    <a href="Tutorial.cshtml?id=@RobotIDBottom&view=adult">Tutorial</a>
                 </div>
             </div>
         }

@@ -14,9 +14,11 @@
     text-decoration: none;
 }
 
-.nav a:hover {
-    background-color: red;
-}
+    .nav a:hover {
+        background-color: red;
+        text-decoration:none; 
+        color: #fff;
+    }
 
 p a {
     color: black;
@@ -76,7 +78,8 @@ img {
 }
 
 .boxie1 {
-    background-color: #53B2D5;
+    background-color: #333;
+    margin-bottom: 20px;
 }
 
 .boxie2 {
@@ -139,12 +142,9 @@ img {
 .tutorial-page-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    background-color: #f2f2f2;
+    background-color: #8c8a8a;
     grid-auto-rows: auto;
-    grid-template-areas: 
-        "stap1 stap2 stap3" 
-        "stap4 stap5 stap6" 
-        "video video video";
+    grid-template-areas: "... pic1 ..." "stap1 stap2 stap3" "stap4 stap5 stap6" "... pic2 ..." "video video video";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;
@@ -156,7 +156,7 @@ img {
 .information-page-grid {
     display: grid;
     grid-template-columns: 1fr;
-    background-color: #f2f2f2;
+    background-color: #8c8a8a;
     grid-auto-rows: auto;
     grid-template-areas: "name" "image" "info " "store";
     grid-gap: 3em;
@@ -165,6 +165,7 @@ img {
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 30px;
+    padding-top: 40px;
 }
 
 .info {
@@ -183,4 +184,20 @@ img {
     grid-area: name;
     align-self: center;
     justify-self: center;
+}
+
+.pic1 {
+    grid-area: pic1;
+    align-self: center;
+    justify-self: center;
+    max-width: 250px;
+    height: auto;
+}
+
+.pic2 {
+    grid-area: pic2;
+    align-self: center;
+    justify-self: center;
+    max-width: 250px;
+    height: auto;
 }
