@@ -1,6 +1,8 @@
 ﻿.nav {
     overflow: hidden;
     background-color: #333;
+    text-decoration:none; 
+    color: #fff;
 }
 
 .nav a {
@@ -90,12 +92,6 @@ img {
     background-color: #333;
 }
 
-.step1{
-    grid-area: stap1;
-    justify-self: center;
-    align-self:center;
-}
-
 .image {
     display: block;
     justify-self: center;
@@ -104,34 +100,34 @@ img {
     height: auto;
 }
 
+.step1{
+    grid-area: stap1;
+    text-align: center;
+}
+
 .step2 {
     grid-area: stap2;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
 }
 
 .step3 {
     grid-area: stap3;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
 }
 
 .step4 {
     grid-area: stap4;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
 }
 
 .step5 {
     grid-area: stap5;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
 }
 
 .step6 {
     grid-area: stap6;
-    justify-self: center;
-    align-self: center;
+    text-align: center;
 }
 
 .video {

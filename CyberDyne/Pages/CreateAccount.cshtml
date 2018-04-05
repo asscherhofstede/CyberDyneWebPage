@@ -5,99 +5,48 @@
     Validation.RequireField("ConfirmPassword", "Je hebt niks ingevuld");
     Validation.Add("password", Validator.EqualsTo("ConfirmPassword", "Wachtwoorden komen niet overeen"));
 
-    /*var username = "";
-    var password = "";
-    var email = "";
-
-    /*if (IsPost && Validation.IsValid())
-    {
-        username = Request.Form["username"];
-        email = Request.Form["email"];
-        password = Request.Form["password"];
-
-        var db = Database.Open("Robot");
-        var insertCommand = "INSERT INTO Admin (UserName, PassWord, Email) VALUES (@0, @1, @2)";
-        db.Execute(insertCommand, username, password, email);
-        Response.Redirect("~/Pages/Homepage.cshtml");
-    }*/
-}
-@{
-
     var UserName = "";
-
     var PassWord = "";
-
     var ConfirmPassWord = "";
-
     var errorMessage = "";
-
-
-
+    
     if (!IsPost)
     {
-
         if (WebSecurity.IsAuthenticated)
         {
-
             errorMessage = String.Format("You are already logged in. (User name: {0})", WebSecurity.CurrentUserName);
-
         }
-
     }
-
-
 
     if (IsPost)
     {
-
         WebSecurity.Logout();
 
-
-
         UserName = Request["UserName"];
-
         PassWord = Request["PassWord"];
-
         ConfirmPassWord = Request["ConfirmPassWord"];
-
-
 
         if (PassWord != ConfirmPassWord)
         {
-
             errorMessage = "Passwords don't match.";
-
         }
-
         else
         {
-
             if (WebSecurity.UserExists(UserName))
             {
-
                 errorMessage = String.Format("User '{0}' already exists.", UserName);
-
             }
-
             else
             {
-
                 WebSecurity.CreateUserAndAccount(UserName, PassWord, false);
-
                 WebSecurity.Login(UserName, PassWord, true);
 
                 Session["LoggedIn"] = true;
-
                 errorMessage = String.Format("{0} created.", UserName);
-
                 Response.Redirect("~/Pages/Homepage.cshtml?view=adult&page=1");
-
             }
-
         }
-
     }
-
 }
 
 <!DOCTYPE html>
@@ -168,7 +117,9 @@
         </div>
     </section>
 
-    @RenderPage("~/Shared/_Footer.cshtml")
+    <div class="fixed-bottom">
+        @RenderPage("~/Shared/_Footer.cshtml")
+    </div>
 </body>
 
 

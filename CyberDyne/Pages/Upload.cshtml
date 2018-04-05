@@ -85,7 +85,7 @@
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
 
-    @if (admin)
+    @if (admin == false)
     {
         <form class="information-grid" method="post" enctype="multipart/form-data">
             <div class="information-upload">

@@ -76,6 +76,16 @@
     RobotIDSecond = db.QueryValue(idCommandSecond);
     RobotIDBottom = db.QueryValue(idCommandBottom);
 
+    //Gewoon checken of er wel genoeg records staan in de database
+    if(RobotIDSecond == RobotIDTop)
+    {
+        RobotIDSecond = 0;
+    }
+    if (RobotIDBottom == RobotIDTop)
+    {
+        RobotIDBottom = 0;
+    }
+
     #endregion
 
     #region Pagina-indeling

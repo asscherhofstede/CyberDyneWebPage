@@ -17,35 +17,12 @@
         {
             Session["LoggedIn"] = true;
             Response.Redirect("~/Pages/Homepage.cshtml?view=adult&page=1");
-
         }
-
         else
-
         {
-
             errorMessage = "Login was not successful.";
             Session["LoggedIn"] = false;
         }
-
-
-
-        /*if (IsPost && Validation.IsValid())
-        {
-            var db = Database.Open("Robot");
-            string UserName = Request.Form["UserName"];
-            string PassWord = Request.Form["PassWord"];
-            string CheckCommand = "SELECT AdminId FROM Admin WHERE UserName = @0 AND PassWord = @1";
-            var Check = db.Query(CheckCommand, UserName, PassWord);
-
-            if(Check != null)
-            {
-                Session["admin"] = true;
-                Session["name"] = UserName;
-                Response.Redirect("~/Pages/Homepage.cshtml");
-            }
-        }*/
-        Response.Write("IsFeyeNoord = Kampioen");
     }
     Response.Write(errorMessage);
 }

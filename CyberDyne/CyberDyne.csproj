@@ -121,7 +121,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Pages\TermsAndCondition.cshtml" />
-    <Content Include="Pages\CreatAccount.cshtml" />
+    <Content Include="Pages\CreateAccount.cshtml" />
     <None Include="packages.config" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -135,7 +135,6 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Pages\Upload.cshtml" />
     <Content Include="Pages\ShowImage.cshtml" />
-    <Content Include="Pages\Test.cshtml" />
     <Content Include="Pages\info12plus.cshtml" />
     <Content Include="Pages\infotot6.cshtml" />
     <Content Include="Pages\beginpagina.cshtml" />
