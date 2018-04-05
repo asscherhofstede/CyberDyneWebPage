@@ -3,18 +3,18 @@
     background-color: #333;
 }
 
-    .nav a {
-        float: left;
-        font-size: 16px;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
+.nav a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
-        .nav a:hover {
-            background-color: red;
-        }
+.nav a:hover {
+    background-color: red;
+}
 
 p a {
     color: black;
@@ -75,10 +75,107 @@ img {
 
 .boxie1 {
     background-color: #53B2D5;
-    padding-bottom: 1rem;
 }
 
 .boxie2 {
     background-color: #333;
-    padding-bottom: 1rem;
+}
+.boxie1 p {
+    margin-bottom: 0 !important; /*How to beat bootstrap*/
+}
+.boxie2 p {
+    margin-bottom: 0 !important; /*How to beat bootstrap*/
+}
+.body {
+    background-color: #333;
+}
+
+.step1{
+    grid-area: stap1;
+    justify-self: center;
+    align-self:center;
+}
+
+.image img-fluid {
+    grid-area: image;
+    justify-self: center;
+    align-self: center;
+}
+
+.step2 {
+    grid-area: stap2;
+
+}
+
+.step3 {
+    grid-area: stap3;
+
+}
+
+.step4 {
+    grid-area: stap4;
+    justify-self: center;
+    align-self: center;
+}
+
+.step5 {
+    grid-area: stap5;
+    justify-self: center;
+    align-self: center;
+}
+
+.step6 {
+    grid-area: stap6;
+    justify-self: center;
+    align-self: center;
+}
+
+.video {
+    grid-area: video;
+    justify-self: center;
+    align-self: center;
+}
+
+.tutorial-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #f2f2f2;
+    grid-auto-rows: auto;
+    grid-template-areas: 
+        "... image ..." 
+        "... image ..." 
+        "stap1 stap2 stap3" 
+        "stap4 stap5 stap6" 
+        "video video video";
+    grid-gap: 3em;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 30px;
+}
+
+.information-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #f2f2f2;
+    grid-auto-rows: auto;
+    grid-template-areas: "... pic ..." "... pic ..." "info info info" "info info info" "link store ...";
+    grid-gap: 3em;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 30px;
+}
+
+.pic {
+    grid-area: pic;
+    align-self: center;
+    justfy-self: center;
+}
+.info {
+    grid-area: info;
+    align-self: center;
+    justify-self: center;
 }
