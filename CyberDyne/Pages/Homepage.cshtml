@@ -167,8 +167,8 @@
 <html>
 <head>
     <title>CyberDyne</title>
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/CSS/Kevin.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
 </head>
 <body>
     @RenderPage("~/Shared/_Header.cshtml")
@@ -191,7 +191,7 @@
 
         <div class="robot-grid">
             <div class="image">
-                <img class="image img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
+                <img class="image" src="~/Pages/ShowImage.cshtml?RobotID=@RobotIDTop" alt="Er is geen foto beschikbaar" />
             </div>
             <div class="text">
                 <p style="padding-left:50px;">@descriptionTop</p>

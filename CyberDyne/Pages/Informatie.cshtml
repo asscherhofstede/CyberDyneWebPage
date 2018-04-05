@@ -10,7 +10,7 @@
     var step5 = "";
     var step6 = "";
     var video = "";
-    var information = "";
+   
 
 
     int robotID = 0;
@@ -57,64 +57,61 @@
     @RenderPage("~/Shared/_Header.cshtml")
     <div class="boxie1">
         <div class="information-page-grid">
-            <div class="img">
 
-
+            <div class="naam">
+                <h1 style="text-align: center;">@naam</h1>
             </div>
 
-
+            <div class="image">
+                <img class="image img-fluid" style="max-height: 200px;" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
+            </div>
+            
             <div class="info">
                 <p>@information</p>
             </div>
-            
-
+            <div class="store">
+               <a href="@link">Store</a>
+            </div>
 
         </div>
-
-       
-
-    </div>
-    <img />
-    
-
- 
+    </div> 
         <!--tutorial-->
         <div class="boxie2">
-           
-
-
-
             <div class="tutorial-page-grid">
-                <!--Image-->
-                <div class="image img-fluid">
-                    <img class="image-grid img-fluid" src="~/Pages/ShowImage.cshtml?RobotID=@robotID" alt="Er is geen foto beschikbaar" />
-                </div>
                 <!--stappen-->
                 <div class="step1">
+                    <h2>Stap 1</h2>
                     <p>@step1</p>
                 </div>
 
                 <div class="step2">
+                    <h2>Stap 2</h2>
                     <p>@step2</p>
                 </div>
                 <div class="step3">
+                    <h2>Stap 3</h2>
                     <p>@step3</p>
                 </div>
                 <div class="step4">
+                    <h2>Stap 4</h2>
                     <p>@step4</p>
                 </div>
                 <div class="step5">
+                    <h2>Stap 5</h2>
                     <p>@step5</p>
                 </div>
                 <div class="step6">
+                    <h2>Stap 6</h2>
                     <p>@step6</p>
                 </div>
                 <div class="video">
-                    <p>@video</p>
+                    <h2>Niet Gelukt? Hier een video!</h2>
+                    <iframe width="420" height="315"
+                            src=@video>
+                    </iframe>
                 </div>
-            </div>
-    @step1
 
+            </div>
     </div>
 
     @RenderPage("~/Shared/_Footer.cshtml")

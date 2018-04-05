@@ -44,6 +44,7 @@
         step5 = Request.Form["step5"];
         step6 = Request.Form["step6"];
         video = Request.Form["video"];
+        video = video.Replace("watch?v=", "embed/");
 
         //insertcommand voor de tabel 'robot'
         var insertCommandRobot = "INSERT INTO Robot (Name, Description, Link, Tutorial, Information) VALUES (@0, @1, @2, @3, @4)";
@@ -72,6 +73,7 @@
             db.Execute(sql, fileName, fileContent, fileMime, RobotID);
             id = (int)db.GetLastInsertId();
         }
+
     }
 }
 <!DOCTYPE html>
@@ -92,7 +94,7 @@
 
                 @FileUpload.GetHtml(
                      initialNumberOfFiles: 1,
-                     allowMoreFilesToBeAdded: false,
+                     allowMoreFilesToBeAdded: true,
                      includeFormTag: false,
                      uploadText: "Upload")
                 <div class="form-group">
