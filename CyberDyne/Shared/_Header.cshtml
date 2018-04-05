@@ -1,5 +1,6 @@
 ﻿@using WebMatrix.WebData;
 @{
+    var value = WebSecurity.CurrentUserName;
     bool admin = false;
     if (Session["admin"] != null)
     {
@@ -22,6 +23,12 @@
         adult = Convert.ToBoolean(Session["adult"]);
     }
     string name = Convert.ToString(Session["name"]);
+
+    bool loggedIn = false;
+    if (Session["LoggedIn"] != null)
+    {
+        loggedIn = Convert.ToBoolean(Session["LoggedIn"]);
+    }
 }
 <!DOCTYPE HTML>
 <html>
@@ -35,56 +42,30 @@
             @if (child)
             {
                 <a href="Homepage.cshtml?view=child&page=1">Home</a>
+                <a href="~/Pages/LogOut.cshtml">Log Out</a>
             }
 
             @if (teen)
             {
                 <a href="Homepage.cshtml?view=teen&page=1">Home</a>
+                <a href="~/Pages/LogOut.cshtml">Log Out</a>
             }
 
             @if (adult || admin)
             {
                 <a href="Homepage.cshtml?view=adult&page=1">Home</a>
+                if (loggedIn == true)
+                {
+                    <a href="~/Pages/Log In.cshtml">Sign In</a>
+                    <a href="~/Pages/CreatAccount.cshtml">Sign Up</a>
+                }
+                else
+                {
+                    <p style="color: #fff; align-self: center;">Hello, @value</p>
+                    <a href="~/Pages/LogOut.cshtml">Log Out</a>
+                }
             }
 
-
-            <a href="~/Pages/About Me.cshtml">About Me</a>
-            @if (adult || admin)
-            {
-                <a href="~/Pages/info12+.cshtml">Robot Info</a>
-            }
-            @if (teen)
-            {
-                <a href="~/Pages/info6tot12.cshtml">Robot Info</a>
-            }
-            @if (child)
-            {
-                <a href="~/Pages/infotot6.cshtml">Robot Info</a>
-            }
-
-            @if (Session["loggedIn"] == null)
-            {
-                <div class="collapse navbar-collapse ">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="~/Pages/Sign In Bruidspaar.cshtml">Sign In</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="~/Pages/Sign Up Bruidspaar.cshtml">Sign Up</a>
-                        </li>
-                    </ul>
-                </div>
-            }
-            else
-            {
-                <div class="collapse navbar-collapse ">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="~/Pages/LogOut.cshtml">Log Out</a>
-                        </li>
-                    </ul>
-                </div>
-            }
         </div>
     </header>
 </body>
