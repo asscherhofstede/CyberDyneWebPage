@@ -1,55 +1,52 @@
-﻿<!DOCTYPE html>
+﻿@{
+    //robotinformatie
+    var naam = "";
+    var link = "";
+    var information = "";
+    int robotID;
+    if (Request["RobotID"].IsInt())
+    {
+        robotID = Request["RobotID"].AsInt();
+
+        var db = Database.Open("Robot");
+        var selectCommandName = "SELECT Name FROM Robot WHERE RobotID = @0";
+        var selectCommandStore = "SELECT winkel FROM Robot Where RobotID = @0";
+        naam = db.QueryValue(selectCommandName, robotID);
+        link = db.QueryValue(selectCommandStore, robotID);
+    }
+
+
+
+
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>(Naam_Robot)</title>
-
+    <link href="~/Shared/LayOut.css" rel="stylesheet" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/CSS/DavidTrojanhorse.css" rel="stylesheet" />
 </head>
-<body link="red">
+<body>
     @RenderPage("~/Shared/_Header.cshtml")
 
-    <div class="container-banner">
-        <img class="banner" src="http://via.placeholder.com/1920x400?text=Banner" width="1920">
-    </div>
-
-
-
-    <div class="linker" style="padding-left:40px; border: 5px solid red; border-radius:5px">
-        <ul style="font-size:120%; text-decoration:none; color:red; ">
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-            <li><a href="#">Link naar andere robot</a></li>
-        </ul>
-    </div>
-    <div class="middelste" align="center">
-
-        <div class="plaatje12">
-            <img style="border:5px solid red;" src="http://via.placeholder.com/800x500?text=image" class="center">
-
-        </div>
+    <div class="boxie1" style="background-color:aqua;">
+        <p> hfalnflanfwalnf</p>
+        </br>
+        <p> guhalnalnclwain</p>
+        <hr />
+        <p> obavnailwvn</p>
 
     </div>
-    <div class="rechter" style="border:5px solid black; border-radius:5px;">
-        <ul style="font-size:120%">
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-            <li>Hier komt een feitje te staan over de robot</li>
-        </ul>
+    <div class="boxie2" style="background-color: #333;">
+        <p>
+            nalnwcliwancalncwnciaownclawknicaiwcnlaincaiwlcnailwncailw niacnaiwnwilcnwaicnawocnawicnawicaw
+            cawmciawcipcnawipc</br> niwaonfiwnvwiwanINVaiw
+        </p>
+
     </div>
-    <div class="fixed-bottom">
-        @RenderPage("~/Shared/_Footer.cshtml")
-    </div>
+
+    @RenderPage("~/Shared/_Footer.cshtml")
 </body>
 </html>
+
