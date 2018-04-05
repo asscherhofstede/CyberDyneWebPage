@@ -96,7 +96,7 @@ img {
     align-self:center;
 }
 
-.image {
+.image img-fluid {
     grid-area: image;
     justify-self: center;
     align-self: center;
@@ -130,7 +130,13 @@ img {
     align-self: center;
 }
 
-.information-page-grid {
+.video {
+    grid-area: video;
+    justify-self: center;
+    align-self: center;
+}
+
+.tutorial-page-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     background-color: #f2f2f2;
@@ -140,11 +146,36 @@ img {
         "... image ..." 
         "stap1 stap2 stap3" 
         "stap4 stap5 stap6" 
-        "stap7 stap7 stap7";
+        "video video video";
     grid-gap: 3em;
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 30px;
+}
+
+.information-page-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #f2f2f2;
+    grid-auto-rows: auto;
+    grid-template-areas: "... pic ..." "... pic ..." "info info info" "info info info" "link store ...";
+    grid-gap: 3em;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 30px;
+}
+
+.pic {
+    grid-area: pic;
+    align-self: center;
+    justfy-self: center;
+}
+.info {
+    grid-area: info;
+    align-self: center;
+    justify-self: center;
 }
