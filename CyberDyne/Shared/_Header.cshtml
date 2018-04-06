@@ -59,30 +59,30 @@
                 if (child)
                 {
                     <a href="Homepage.cshtml?view=child&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
-                    <a href="~/Pages/Upload.cshtml">Upload</a>
+                    <a href="~/Pages/About Me.cshtml?view=child">About Me</a>
+                    <a href="~/Pages/Upload.cshtml?view=adult">Upload</a>
                     <div class="ml-auto">
                         <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
                         <a href="Homepage.cshtml?view=adult&page=1">Adult</a>
                         <a href="~/Pages/LogOut.cshtml">Log Out</a>
                     </div>
                 }
-                if (teen)
+                else if (teen)
                 {
                     <a href="Homepage.cshtml?view=teen&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
-                    <a href="~/Pages/Upload.cshtml">Upload</a>
+                    <a href="~/Pages/About Me.cshtml?view=teen">About Me</a>
+                    <a href="~/Pages/Upload.cshtml?view=adult">Upload</a>
                     <div class="ml-auto">
                         <a href="Homepage.cshtml?view=child&page=1">Child</a>
                         <a href="Homepage.cshtml?view=adult&page=1">Adult</a>
                         <a href="~/Pages/LogOut.cshtml">Log Out</a>
                     </div>
                 }
-                if (adult)
+                else if (adult)
                 {
                     <a href="Homepage.cshtml?view=adult&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
-                    <a href="~/Pages/Upload.cshtml">Upload</a>
+                    <a href="~/Pages/About Me.cshtml?view=adult">About Me</a>
+                    <a href="~/Pages/Upload.cshtml?view=adult">Upload</a>
                     <div class="ml-auto">
                         <a href="Homepage.cshtml?view=child&page=1">Child</a>
                         <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
@@ -92,8 +92,8 @@
                 else
                 {
                     <a href="Homepage.cshtml?view=@view&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
-                    <a href="~/Pages/Upload.cshtml">Upload</a>
+                    <a href="~/Pages/About Me.cshtml?view=adult">About Me</a>
+                    <a href="~/Pages/Upload.cshtml?view=adult">Upload</a>
                     <div class="ml-auto">
                         <a href="Homepage.cshtml?view=child&page=1">Child</a>
                         <a href="Homepage.cshtml?view=teen&page=1">Teen</a>
@@ -106,23 +106,23 @@
                 if (child)
                 {
                     <a href="Homepage.cshtml?view=child&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/About Me.cshtml?view=child">About Me</a>
                     <div class="ml-auto">
                         <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>
                 }
-                if (teen)
+                else if (teen)
                 {
                     <a href="Homepage.cshtml?view=teen&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/About Me.cshtml?view=teen">About Me</a>
                     <div class="ml-auto">
                         <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>
                 }
-                if (adult)
+                else if (adult)
                 {
                     <a href="Homepage.cshtml?view=adult&page=1">Home</a>
-                    <a href="~/Pages/About Me.cshtml">About Me</a>
+                    <a href="~/Pages/About Me.cshtml?view=adult">About Me</a>
                     <div class="ml-auto">
                         <a href="~/Pages/Log In.cshtml">Log In</a>
                     </div>

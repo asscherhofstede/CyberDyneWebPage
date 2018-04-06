@@ -85,7 +85,7 @@
     {
         RobotIDSecond = 0;
     }
-    if (RobotIDBottom == RobotIDTop)
+    if (RobotIDBottom == RobotIDTop || RobotIDBottom == RobotIDSecond)
     {
         RobotIDBottom = 0;
     }
@@ -308,13 +308,7 @@
                     <p style="padding-left:50px;">@descriptionSecond</p>
                 </div>
                 <div class="store">
-                    <a href="@linkSecond">Store</a>
-                </div>
-                <div class="info">
-                    <a href="@informationSecond">Info</a>
-                </div>
-                <div class="tutorial">
-                    <a href="Tutorial.cshtml?id=@RobotIDSecond&view=adult">Tutorial</a>
+                    <a href="~/Pages/Informatie.cshtml?RobotID=@RobotIDSecond&view=adult">Read more</a>
                 </div>
             </div>
         }
@@ -329,13 +323,7 @@
                     <p style="padding-left:50px;">@descriptionBottom</p>
                 </div>
                 <div class="store">
-                    <a href="@linkBottom">Store</a>
-                </div>
-                <div class="info">
-                    <a href="@informationBottom">Info</a>
-                </div>
-                <div class="tutorial">
-                    <a href="Tutorial.cshtml?id=@RobotIDBottom&view=adult">Tutorial</a>
+                    <a href="~/Pages/Informatie.cshtml?RobotID=@RobotIDBottom&view=adult">Read more</a>
                 </div>
             </div>
         }
